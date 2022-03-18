@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stand_up_2/app_theme.dart';
 
-class ErgonomicsTipsScreen extends StatelessWidget {
+class NoiseTipsScreen extends StatelessWidget {
   final void Function(int index) changePage;
-  const ErgonomicsTipsScreen({Key? key, required this.changePage}) : super(key: key);
+  const NoiseTipsScreen({Key? key, required this.changePage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,22 +55,22 @@ class ErgonomicsTipsScreen extends StatelessWidget {
                                     tileMode: TileMode.clamp
                                 ),
                               ),
-                              child: const CircleAvatar(child: Icon(Icons.chair_rounded, color: AppTheme.white), backgroundColor: Colors.transparent),
+                              child: const CircleAvatar(child: Icon(Icons.volume_up_outlined, color: AppTheme.white), backgroundColor: Colors.transparent),
                             ),
                             const SizedBox(width:10),
-                            const Text('Ergonomics', style: AppTheme.card1),]),
+                            const Text('Noise', style: AppTheme.card1),]),
                             const SizedBox(height: 20,),
                           Container(padding: const EdgeInsets.all(15),
                             child:
                             Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
-                              Text('Chair', style: AppTheme.card7),
-                              Text('A good office chair should have five castors, the ability to swivel as well as adjustable height and tilt, and back position.', style: AppTheme.body1),
+                              Text('Visitors', style: AppTheme.card7),
+                              Text('Try to have a dedicated personal home office space. Set clear working hours with those you live with to avoid being disrupted.', style: AppTheme.body1),
                               SizedBox(height: 20,),
-                              Text('Desk', style: AppTheme.card7),
-                              Text('Ideally, a desk should alternate between sitting/standing positions. If not, its height should accommodate you without a footrest, and the surface should hold all equipment comfortably.', style: AppTheme.body1),
+                              Text('Headphones', style: AppTheme.card7),
+                              Text("Wearing headphones whilst you're working can help to reduce background noise. In addition, noise cancelling headphones can go a long way in helping you to maintain your focus.", style: AppTheme.body1),
                               SizedBox(height: 20,),
-                              Text('Accessories', style: AppTheme.card7),
-                              Text('Ergonomics accessories like footrests, ergonomic keyboards/mice and anti-fatigue mats are advisable. Smaller changes like wearing comfortable shoes and staying conscious of sitting position can go along way.', style: AppTheme.body1)
+                              Text('Time', style: AppTheme.card7),
+                              Text('Some sounds can be masked simply by introducing white noise into your home office space. Try using a noise-cancelling app or even installing a dedicated white noise system into your room.', style: AppTheme.body1)
                             ]))
                           ],
                           ),

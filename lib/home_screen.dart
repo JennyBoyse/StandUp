@@ -9,6 +9,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Center (
         child: ListView(
@@ -20,11 +22,12 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                       children: <Widget>[
                         Container(
+                          width: screenWidth*0.9,
                           padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0), // padding either side of item cards
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Column(
+                                  Column(
                                     crossAxisAlignment: CrossAxisAlignment.stretch,
                                     children: [
                                       TextButton(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:stand_up_2/home_screen.dart';
 import 'package:stand_up_2/settings_screen.dart';
 import 'package:stand_up_2/statistics_screen.dart';
@@ -6,7 +7,11 @@ import 'package:stand_up_2/tips_screen.dart';
 import 'activities_screen.dart';
 import 'app_theme.dart';
 
-void main() => runApp(const StandUp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+  runApp(const StandUp());
+}
 
 class StandUp extends StatelessWidget {
   static const String _title = 'StandUp';
@@ -41,14 +46,6 @@ class _AbstractPageState extends State<AbstractPage> {
   late int _currentIndex;
   late final List _pageOptions;
 
-  static const List<Widget> _pages = <Widget>[
-    Text('Home', style: AppTheme.display1,),
-    Text('Activities', style: AppTheme.display1,),
-    Text('Statistics', style: AppTheme.display1,),
-    Text('Tips', style: AppTheme.display1,),
-    Text('Settings', style: AppTheme.display1,),
-  ];
-
   _AbstractPageState() {
     _currentIndex = 0;
 
@@ -63,7 +60,7 @@ class _AbstractPageState extends State<AbstractPage> {
       ActivitiesScreen(changePage: temp),
       const StatisticsScreen(),
       TipsScreen(changePage: temp),
-      const SettingsScreen()
+      SettingsScreen(changePage: temp)
     ];
   }
 
@@ -73,7 +70,6 @@ class _AbstractPageState extends State<AbstractPage> {
     });
   }
 
-  // _pageOptions[_currentIndex]
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,6 +110,7 @@ class _AbstractPageState extends State<AbstractPage> {
           selectedItemColor: AppTheme.blue,
         ),
       ),
+      appBar: null
     );
   }
 }

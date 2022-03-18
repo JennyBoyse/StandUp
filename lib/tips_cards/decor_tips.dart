@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stand_up_2/app_theme.dart';
 
-class ErgonomicsTipsScreen extends StatelessWidget {
+class DecorTipsScreen extends StatelessWidget {
   final void Function(int index) changePage;
-  const ErgonomicsTipsScreen({Key? key, required this.changePage}) : super(key: key);
+  const DecorTipsScreen({Key? key, required this.changePage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,22 +55,22 @@ class ErgonomicsTipsScreen extends StatelessWidget {
                                     tileMode: TileMode.clamp
                                 ),
                               ),
-                              child: const CircleAvatar(child: Icon(Icons.chair_rounded, color: AppTheme.white), backgroundColor: Colors.transparent),
+                              child: const CircleAvatar(child: Icon(Icons.format_paint_outlined, color: AppTheme.white), backgroundColor: Colors.transparent),
                             ),
                             const SizedBox(width:10),
-                            const Text('Ergonomics', style: AppTheme.card1),]),
+                            const Text('Decor', style: AppTheme.card1),]),
                             const SizedBox(height: 20,),
                           Container(padding: const EdgeInsets.all(15),
                             child:
                             Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
-                              Text('Chair', style: AppTheme.card7),
-                              Text('A good office chair should have five castors, the ability to swivel as well as adjustable height and tilt, and back position.', style: AppTheme.body1),
+                              Text('Plants', style: AppTheme.card7),
+                              Text('Introducing plants into your office space can bring additional colour into the room and improve air quality, helping you to focus more during the day.', style: AppTheme.body1),
                               SizedBox(height: 20,),
-                              Text('Desk', style: AppTheme.card7),
-                              Text('Ideally, a desk should alternate between sitting/standing positions. If not, its height should accommodate you without a footrest, and the surface should hold all equipment comfortably.', style: AppTheme.body1),
+                              Text('Soft Furnishings', style: AppTheme.card7),
+                              Text('Adding soft furnishings such as carpet, curtains and soft decorations can help to create a quieter and more comfortable work environment.', style: AppTheme.body1),
                               SizedBox(height: 20,),
-                              Text('Accessories', style: AppTheme.card7),
-                              Text('Ergonomics accessories like footrests, ergonomic keyboards/mice and anti-fatigue mats are advisable. Smaller changes like wearing comfortable shoes and staying conscious of sitting position can go along way.', style: AppTheme.body1)
+                              Text('Desk Organisation', style: AppTheme.card7),
+                              Text('Desk Organisers such as pencil holders, baskets and filing folders can help to declutter your workspace and organise any important paperwork for later reference.', style: AppTheme.body1)
                             ]))
                           ],
                           ),

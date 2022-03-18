@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:stand_up_2/tips_cards/decor_tips.dart';
 import 'package:stand_up_2/tips_cards/ergonomics_tips.dart';
 import 'package:stand_up_2/tips_cards/lighting_tips.dart';
+import 'package:stand_up_2/tips_cards/noise_tips.dart';
+import 'package:stand_up_2/tips_cards/workspace_tips.dart';
 import 'app_theme.dart';
 
 class TipsScreen extends StatelessWidget {
@@ -39,22 +42,7 @@ class TipsScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Container(
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      gradient: LinearGradient(
-                                          begin: Alignment.bottomCenter,
-                                          end: Alignment.topCenter,
-                                          colors: [
-                                            AppTheme.darkPurple,
-                                            AppTheme.lightPurple,
-                                          ],
-                                          tileMode: TileMode.clamp
-                                      ),
-                                    ),
-                                    child: const CircleAvatar(child: Icon(Icons.light, color: AppTheme.white), backgroundColor: Colors.transparent),
-                                  ),
-                                  Container(
-                                    width: screenWidth * 0.8,
+                                    width: screenWidth * 0.9,
                                     child: TextButton(
                                     style: TextButton.styleFrom(
                                       minimumSize: const Size.fromHeight(40),
@@ -64,7 +52,23 @@ class TipsScreen extends StatelessWidget {
                                       textStyle: AppTheme.subtitle,
                                       backgroundColor: AppTheme.white,
                                     ),
-                                    child: Row(mainAxisAlignment: MainAxisAlignment.end, children: const [
+                                    child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                                      Container(
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          gradient: LinearGradient(
+                                              begin: Alignment.bottomCenter,
+                                              end: Alignment.topCenter,
+                                              colors: [
+                                                AppTheme.darkPurple,
+                                                AppTheme.lightPurple,
+                                              ],
+                                              tileMode: TileMode.clamp
+                                          ),
+                                        ),
+                                        child: const CircleAvatar(child: Icon(Icons.light, color: AppTheme.white), backgroundColor: Colors.transparent),
+                                      ),
+                                      SizedBox(width: 20),
                                       Text('Lighting', style: AppTheme.card1),
                                       Spacer(),
                                       Icon(Icons.arrow_forward_ios, color: AppTheme.lightGrey)]),
@@ -74,25 +78,9 @@ class TipsScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 30, child: DecoratedBox(decoration: BoxDecoration(color: AppTheme.lightGrey))),
                             Row(
-                                //mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Container(
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      gradient: LinearGradient(
-                                          begin: Alignment.bottomCenter,
-                                          end: Alignment.topCenter,
-                                          colors: [
-                                            AppTheme.darkPurple,
-                                            AppTheme.lightPurple,
-                                          ],
-                                          tileMode: TileMode.clamp
-                                      ),
-                                    ),
-                                    child: const CircleAvatar(child: Icon(Icons.chair_rounded, color: AppTheme.white), backgroundColor: Colors.transparent),
-                                  ),
-                                  Container(
-                                    width: screenWidth * 0.8,
+                                    width: screenWidth * 0.9,
                                     child: TextButton(
                                     style: TextButton.styleFrom(
                                       alignment: Alignment.centerLeft,
@@ -101,7 +89,23 @@ class TipsScreen extends StatelessWidget {
                                       textStyle: AppTheme.subtitle,
                                       backgroundColor: AppTheme.white,
                                     ),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.end, children: const [
+                                      child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            gradient: LinearGradient(
+                                                begin: Alignment.bottomCenter,
+                                                end: Alignment.topCenter,
+                                                colors: [
+                                                  AppTheme.darkPurple,
+                                                  AppTheme.lightPurple,
+                                                ],
+                                                tileMode: TileMode.clamp
+                                            ),
+                                          ),
+                                          child: const CircleAvatar(child: Icon(Icons.chair_rounded, color: AppTheme.white), backgroundColor: Colors.transparent),
+                                        ),
+                                        SizedBox(width: 20),
                                         Text('Ergonomics', style: AppTheme.card1),
                                         Spacer(),
                                         Icon(Icons.arrow_forward_ios, color: AppTheme.lightGrey)]),
@@ -111,25 +115,9 @@ class TipsScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 30, child: DecoratedBox(decoration: BoxDecoration(color: AppTheme.lightGrey))),
                             Row(
-                                //mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Container(
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      gradient: LinearGradient(
-                                          begin: Alignment.bottomCenter,
-                                          end: Alignment.topCenter,
-                                          colors: [
-                                            AppTheme.darkPurple,
-                                            AppTheme.lightPurple,
-                                          ],
-                                          tileMode: TileMode.clamp
-                                      ),
-                                    ),
-                                    child: const CircleAvatar(child: Icon(Icons.computer, color: AppTheme.white), backgroundColor: Colors.transparent),
-                                  ),
-                                  Container(
-                                    width: screenWidth * 0.8,
+                                    width: screenWidth * 0.9,
                                     child: TextButton(
                                     style: TextButton.styleFrom(
                                       alignment: Alignment.centerLeft,
@@ -138,35 +126,35 @@ class TipsScreen extends StatelessWidget {
                                       textStyle: AppTheme.subtitle,
                                       backgroundColor: AppTheme.white,
                                     ),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.end, children: const [
+                                      child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            gradient: LinearGradient(
+                                                begin: Alignment.bottomCenter,
+                                                end: Alignment.topCenter,
+                                                colors: [
+                                                  AppTheme.darkPurple,
+                                                  AppTheme.lightPurple,
+                                                ],
+                                                tileMode: TileMode.clamp
+                                            ),
+                                          ),
+                                          child: const CircleAvatar(child: Icon(Icons.computer, color: AppTheme.white), backgroundColor: Colors.transparent),
+                                        ),
+                                        SizedBox(width: 20),
                                         Text('Workspace', style: AppTheme.card1),
                                         Spacer(),
                                         Icon(Icons.arrow_forward_ios, color: AppTheme.lightGrey)]),
-                                    onPressed: (){changePage(AppTheme.HOMEPAGE);},
+                                    onPressed: (){(Navigator.push(context, MaterialPageRoute(builder: (context) => WorkspaceTipsScreen(changePage: changePage,)),));},
                                   ),),
                                 ]
                             ),
                             const SizedBox(height: 30, child: DecoratedBox(decoration: BoxDecoration(color: AppTheme.lightGrey))),
                             Row(
-                                //mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Container(
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      gradient: LinearGradient(
-                                          begin: Alignment.bottomCenter,
-                                          end: Alignment.topCenter,
-                                          colors: [
-                                            AppTheme.darkPurple,
-                                            AppTheme.lightPurple,
-                                          ],
-                                          tileMode: TileMode.clamp
-                                      ),
-                                    ),
-                                    child: const CircleAvatar(child: Icon(Icons.volume_up_outlined, color: AppTheme.white), backgroundColor: Colors.transparent),
-                                  ),
-                                  Container(
-                                    width: screenWidth * 0.8,
+                                    width: screenWidth * 0.9,
                                     child: TextButton(
                                     style: TextButton.styleFrom(
                                       alignment: Alignment.centerLeft,
@@ -175,35 +163,35 @@ class TipsScreen extends StatelessWidget {
                                       textStyle: AppTheme.subtitle,
                                       backgroundColor: AppTheme.white,
                                     ),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.end, children: const [
+                                      child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            gradient: LinearGradient(
+                                                begin: Alignment.bottomCenter,
+                                                end: Alignment.topCenter,
+                                                colors: [
+                                                  AppTheme.darkPurple,
+                                                  AppTheme.lightPurple,
+                                                ],
+                                                tileMode: TileMode.clamp
+                                            ),
+                                          ),
+                                          child: const CircleAvatar(child: Icon(Icons.volume_up_outlined, color: AppTheme.white), backgroundColor: Colors.transparent),
+                                        ),
+                                        SizedBox(width: 20),
                                         Text('Noise', style: AppTheme.card1),
                                         Spacer(),
                                         Icon(Icons.arrow_forward_ios, color: AppTheme.lightGrey)]),
-                                    onPressed: (){changePage(AppTheme.HOMEPAGE);},
+                                    onPressed: (){(Navigator.push(context, MaterialPageRoute(builder: (context) => NoiseTipsScreen(changePage: changePage,)),));},
                                   ),),
                                 ]
                             ),
                             const SizedBox(height: 30, child: DecoratedBox(decoration: BoxDecoration(color: AppTheme.lightGrey))),
                             Row(
-                                //mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Container(
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      gradient: LinearGradient(
-                                          begin: Alignment.bottomCenter,
-                                          end: Alignment.topCenter,
-                                          colors: [
-                                            AppTheme.darkPurple,
-                                            AppTheme.lightPurple,
-                                          ],
-                                          tileMode: TileMode.clamp
-                                      ),
-                                    ),
-                                    child: const CircleAvatar(child: Icon(Icons.format_paint_outlined, color: AppTheme.white), backgroundColor: Colors.transparent),
-                                  ),
-                                  Container(
-                                    width: screenWidth * 0.8,
+                                    width: screenWidth * 0.9,
                                     child: TextButton(
                                     style: TextButton.styleFrom(
                                       alignment: Alignment.centerLeft,
@@ -212,11 +200,27 @@ class TipsScreen extends StatelessWidget {
                                       textStyle: AppTheme.subtitle,
                                       backgroundColor: AppTheme.white,
                                     ),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.end, children: const [
+                                      child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            gradient: LinearGradient(
+                                                begin: Alignment.bottomCenter,
+                                                end: Alignment.topCenter,
+                                                colors: [
+                                                  AppTheme.darkPurple,
+                                                  AppTheme.lightPurple,
+                                                ],
+                                                tileMode: TileMode.clamp
+                                            ),
+                                          ),
+                                          child: const CircleAvatar(child: Icon(Icons.format_paint_outlined, color: AppTheme.white), backgroundColor: Colors.transparent),
+                                        ),
+                                        SizedBox(width: 20),
                                         Text('Decor', style: AppTheme.card1),
                                         Spacer(),
                                         Icon(Icons.arrow_forward_ios, color: AppTheme.lightGrey)]),
-                                    onPressed: (){changePage(AppTheme.HOMEPAGE);},
+                                    onPressed: (){(Navigator.push(context, MaterialPageRoute(builder: (context) => DecorTipsScreen(changePage: changePage,)),));},
                                   ),),
                                 ]
                             ),
