@@ -6,6 +6,7 @@ class AppTheme {
   //primary colours
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
+  static const Color grey = Color(0xFF6B6B6B); // e.g. menu bar
   static const Color darkGrey = Color(0xFF382D2D); // e.g. menu bar
   static const Color blue = Color(0xFF00ACFF); // logo blue
 

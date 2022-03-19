@@ -75,7 +75,10 @@ class DecorTipsScreen extends StatelessWidget {
                           ],
                           ),
                         ),
-                        TextButton(
+                        SizedBox(height: 10),
+                        Center(
+                          child: Container(
+                            width: 200, height: 30, child: TextButton(
                             style: TextButton.styleFrom(
                               minimumSize: const Size.fromHeight(10),
                               alignment: Alignment.center,
@@ -87,11 +90,12 @@ class DecorTipsScreen extends StatelessWidget {
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
-                                  Icon(Icons.arrow_back_ios_sharp, color: AppTheme.lightGrey),
+                                  Icon(Icons.arrow_back_ios_sharp, color: AppTheme.lightGrey, size: 15),
+                                  SizedBox(width: 10),
                                   Text('Back to Tips')
                                 ]
                             ),
-                            onPressed: (){(Navigator.pop(context));})
+                            onPressed: (){(Navigator.pop(context));})))
                       ]
                   )
               )

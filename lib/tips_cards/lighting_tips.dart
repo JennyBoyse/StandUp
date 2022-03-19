@@ -76,23 +76,32 @@ class LightingTipsScreen extends StatelessWidget {
                                       ],
                                         ),
                                     ),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                minimumSize: const Size.fromHeight(10),
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.all(5),
-                                primary: AppTheme.white,
-                                textStyle: AppTheme.subtitle,
-                                backgroundColor: AppTheme.blue,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(Icons.arrow_back_ios_sharp, color: AppTheme.lightGrey),
-                                  Text('Back to Tips')
-                                ]
-                              ),
-                            onPressed: (){(Navigator.pop(context));})
+                            SizedBox(height: 10),
+                            Center(
+                            child: Container(
+                              width: 200,
+                              height: 30,
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  minimumSize: const Size.fromHeight(10),
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.all(5),
+                                  primary: AppTheme.white,
+                                  textStyle: AppTheme.subtitle,
+                                  backgroundColor: AppTheme.blue,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  )
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(Icons.arrow_back_ios_sharp, color: AppTheme.lightGrey, size: 15),
+                                    SizedBox(width: 10),
+                                    Text('Back to Tips')
+                                  ]
+                                ),
+                              onPressed: (){(Navigator.pop(context));})))
                           ]
                       )
                     )
