@@ -66,12 +66,12 @@ class AppTheme {
     color: black,
   );
 
-  static const TextStyle body2 = TextStyle(
+  static const TextStyle subtitle2 = TextStyle(
     fontFamily: fontName,
-    fontWeight: FontWeight.w400,
-    fontSize: 14,
-    letterSpacing: 0.2,
-    color: black,
+    fontWeight: FontWeight.bold,
+    fontSize: 32,
+    letterSpacing: 0.27,
+    color: darkBlue,
   );
 
   static const TextStyle body1 = TextStyle(
@@ -79,6 +79,22 @@ class AppTheme {
     fontWeight: FontWeight.w400,
     fontSize: 16,
     letterSpacing: -0.05,
+    color: black,
+  );
+
+  static const TextStyle body2 = TextStyle(
+    fontFamily: fontName,
+    fontWeight: FontWeight.bold,
+    fontSize: 16,
+    letterSpacing: 0.2,
+    color: black,
+  );
+
+  static const TextStyle body3 = TextStyle(
+    fontFamily: fontName,
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+    letterSpacing: 0.2,
     color: black,
   );
 
@@ -136,6 +152,14 @@ class AppTheme {
     fontSize: 18,
     letterSpacing: 0.18,
     color: purple,
+  );
+
+  static const TextStyle card8 = TextStyle(
+    fontFamily: fontName,
+    fontWeight: FontWeight.bold,
+    fontSize: 30,
+    letterSpacing: -0.05,
+    color: white,
   );
 
   static const HOMEPAGE = 0;

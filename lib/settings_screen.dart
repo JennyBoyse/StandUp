@@ -118,7 +118,7 @@ class AccountSettings extends StatelessWidget {
         child: Column(
           children: [
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Username',
                   hintText: 'Test User 1',
@@ -127,7 +127,7 @@ class AccountSettings extends StatelessWidget {
                 readOnly: true,
               ),
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: 'Email Address',
                 hintText: 'example@example.com',
@@ -138,7 +138,7 @@ class AccountSettings extends StatelessWidget {
             TextFormField(
               obscureText: true,
               obscuringCharacter: "*",
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: 'Password',
                 hintText: '*********',

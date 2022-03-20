@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter/material.dart';
 import '../activities_screen.dart';
+import '../activity_subpage.dart';
 import '../app_theme.dart';
 import '../breakpoints.dart';
 
@@ -11,7 +12,7 @@ class TopPicks extends StatelessWidget {
   final CarouselController _controller = CarouselController();
   final double customWidth;
 
-  TopPicks({Key? key, required this.activitiesList, required this.customWidth}) : super(key: key) {
+  TopPicks({Key? key, required this.activitiesList, required this.customWidth, context}) : super(key: key) {
     activitySliders = activitiesList
         .map((item) => Container(
           decoration: BoxDecoration(
@@ -39,27 +40,50 @@ class TopPicks extends StatelessWidget {
                     Container(
                         width: customWidth,
                         padding: const EdgeInsets.only(top: 40.0, left: 8.0, right: 8.0),
-                        child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            Flexible(child: IconButton(
-                                onPressed: () => _controller.previousPage(),
-                                icon: const Icon(Icons.arrow_back_ios_rounded, color: AppTheme.white),
-                            )),
-                            Container(
-                              width: customWidth * 0.6,
-                              child: Column(children: <Widget>[
-                                Text(item.activity, style: AppTheme.card4, textAlign: TextAlign.center,),
-                                Text(item.time, style: AppTheme.card5,)]
+                        child: TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.transparent,
                               ),
-                            ),
-                            Flexible(child: IconButton(
-                                onPressed: () => _controller.nextPage(),
-                                icon: const Icon(Icons.arrow_forward_ios_rounded, color: AppTheme.white))),
-                          ])
-                        ]
-                      )
+                              onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => ActivitySubpage(activity: item.activity, time:item.time, intensity:item.intensity, instructionsList: item.instructionsList,)));},
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Flexible(
+                                              child: IconButton(
+                                            onPressed: () =>
+                                                _controller.previousPage(),
+                                            icon: const Icon(
+                                                Icons.arrow_back_ios_rounded,
+                                                color: AppTheme.white),
+                                          )),
+                                          Container(
+                                            width: customWidth * 0.6,
+                                            child: Column(children: <Widget>[
+                                              Text(
+                                                item.activity,
+                                                style: AppTheme.card8,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              Text(
+                                                item.time,
+                                                style: AppTheme.card5,
+                                              )
+                                            ]),
+                                          ),
+                                          Flexible(
+                                              child: IconButton(
+                                                  onPressed: () =>
+                                                      _controller.nextPage(),
+                                                  icon: const Icon(
+                                                      Icons
+                                                          .arrow_forward_ios_rounded,
+                                                      color: AppTheme.white))),
+                                        ])
+                                  ]))
                     ),
                 ],
               )),

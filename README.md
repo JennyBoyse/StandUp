@@ -1,16 +1,8 @@
 # stand_up_2
 
-A new Flutter project.
+A Flutter project for a mobile application which tries to reduce sedentary behaviour and increase physical activity in remote working professionals.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Image attributes are provided within the images > attributes file. These are 'free for commercial use' icons from the Flaticon or icons8 websites.
+Some icons have also been taken from the inbuilt Flutter Icons class within the Material App library. These can be found at the following link: https://api.flutter.dev/flutter/material/Icons-class.html
