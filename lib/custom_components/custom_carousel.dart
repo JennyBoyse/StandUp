@@ -12,39 +12,57 @@ class TopPicks extends StatelessWidget {
   final CarouselController _controller = CarouselController();
   final double customWidth;
 
-  TopPicks({Key? key, required this.activitiesList, required this.customWidth, context}) : super(key: key) {
+  TopPicks(
+      {Key? key,
+      required this.activitiesList,
+      required this.customWidth,
+      context})
+      : super(key: key) {
     activitySliders = activitiesList
         .map((item) => Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: const AssetImage('assets/images/activity_card_background.png'),
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.2), BlendMode.dstATop),
-            ),
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-            gradient: const LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [
-                  AppTheme.darkPurple,
-                  AppTheme.lightPurple,
-                ],
-                tileMode: TileMode.clamp
-            ),
-          ),
-          margin: const EdgeInsets.all(5.0),
-          child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              child: Stack(
-                children: <Widget>[
-                    Container(
-                        width: customWidth,
-                        padding: const EdgeInsets.only(top: 40.0, left: 8.0, right: 8.0),
-                        child: TextButton(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: const AssetImage(
+                      'assets/images/activity_card_background.png'),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.2), BlendMode.dstATop),
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                gradient: const LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [
+                      AppTheme.darkPurple,
+                      AppTheme.lightPurple,
+                    ],
+                    tileMode: TileMode.clamp),
+              ),
+              margin: const EdgeInsets.all(5.0),
+              child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                  child: Stack(
+                    children: <Widget>[
+                      Container(
+                          width: customWidth,
+                          padding: const EdgeInsets.only(
+                              top: 40.0, left: 8.0, right: 8.0),
+                          child: TextButton(
                               style: TextButton.styleFrom(
                                 backgroundColor: Colors.transparent,
                               ),
-                              onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => ActivitySubpage(activity: item.activity, time:item.time, intensity:item.intensity, instructionsList: item.instructionsList,)));},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ActivitySubpage(
+                                              activity: item.activity,
+                                              time: item.time,
+                                              intensity: item.intensity,
+                                              instructionsList:
+                                                  item.instructionsList,
+                                            )));
+                              },
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
@@ -83,43 +101,51 @@ class TopPicks extends StatelessWidget {
                                                           .arrow_forward_ios_rounded,
                                                       color: AppTheme.white))),
                                         ])
-                                  ]))
-                    ),
-                ],
-              )),
-        ))
+                                  ]))),
+                    ],
+                  )),
+            ))
         .toList();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SingleChildScrollView(
-          child: Column(
-              children: <Widget>[CarouselSlider(
-            options: CarouselOptions(aspectRatio: 2.0, enlargeCenterPage: true, scrollDirection: Axis.horizontal),
-            items: activitySliders, carouselController: _controller
-          )])),
+          child: Column(children: <Widget>[
+        CarouselSlider(
+            options: CarouselOptions(
+                aspectRatio: 2.0,
+                enlargeCenterPage: true,
+                scrollDirection: Axis.horizontal),
+            items: activitySliders,
+            carouselController: _controller)
+      ])),
     );
   }
 }
 
 class ActivitiesGrid extends StatelessWidget {
-
-  const ActivitiesGrid({Key? key, required this.crossAxisCount, required this.activitiesList}) :
-        assert(crossAxisCount == 1 || crossAxisCount == 2), super(key: key);
+  const ActivitiesGrid(
+      {Key? key, required this.crossAxisCount, required this.activitiesList})
+      : assert(crossAxisCount == 1 || crossAxisCount == 2),
+        super(key: key);
   final int crossAxisCount;
   final List<ActivityItem> activitiesList;
 
   @override
   Widget build(BuildContext context) {
-    final rowSizes = List.generate(activitiesList.length ~/ crossAxisCount, (_) => auto);
+    final rowSizes =
+        List.generate(activitiesList.length ~/ crossAxisCount, (_) => auto);
     return LayoutGrid(
-      columnSizes: crossAxisCount == 2 ? [1.fr, 1.fr] : [1.fr], // flexible column sizes based on crossAxisCount
-      rowSizes: rowSizes, // self-sizing row height
-      rowGap: 10, // equivalent to mainAxisSpacing
-      columnGap: 5, //equivalent to crossAxisSpacing
+      columnSizes: crossAxisCount == 2 ? [1.fr, 1.fr] : [1.fr],
+      // flexible column sizes based on crossAxisCount
+      rowSizes: rowSizes,
+      // self-sizing row height
+      rowGap: 10,
+      // equivalent to mainAxisSpacing
+      columnGap: 5,
+      //equivalent to crossAxisSpacing
       children: [
         for (var i = 0; i < activitiesList.length; i++)
           SelectCard(item: activitiesList[i]),
@@ -127,59 +153,71 @@ class ActivitiesGrid extends StatelessWidget {
     );
   }
 }
-class SelectCard extends StatelessWidget{
 
-  const SelectCard({Key? key, required this.item}) : super(key:key);
+class SelectCard extends StatelessWidget {
+  const SelectCard({Key? key, required this.item}) : super(key: key);
   final ActivityItem item;
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final horizontalPadding = screenWidth >= Breakpoints.tablet ? 32.0 : 20.0;
     final verticalPadding = screenWidth >= Breakpoints.tablet ? 24.0 : 16.0;
     return Stack(
-        alignment: Alignment.center,
-          children: <Widget>[
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width*0.4,
-                    height: MediaQuery.of(context).size.height*0.18,
-                    child: DecoratedBox(
-                      position: DecorationPosition.foreground,
+      alignment: Alignment.center,
+      children: <Widget>[
+        Container(
+            width: 150,
+            height: 140,
+            padding: EdgeInsets.all(15),
+            decoration: const BoxDecoration(
+              //image: DecorationImage(fit: BoxFit.fitWidth, image: AssetImage(item.image),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    AppTheme.darkPurple,
+                    AppTheme.lightPurple,
+                  ],
+                  tileMode: TileMode.clamp),
+            ),
+            child: Card(
+                elevation: 8,
+                color: Colors.transparent,
+                child: Stack(children: <Widget>[
+                  Container(
+                      width: 50,
+                      height: 50,
                       decoration: const BoxDecoration(
-                            color: AppTheme.purple,
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
-                        ),
-                        child: item.image),),
-                Container(
-                      decoration: const BoxDecoration(
-                        //image: DecorationImage(fit: BoxFit.fitWidth, image: AssetImage(item.image),
+                        color: AppTheme.purple,
                         borderRadius: BorderRadius.all(Radius.circular(10)),
-                        gradient: LinearGradient(
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                            colors: [
-                              AppTheme.darkPurple,
-                              AppTheme.lightPurple,
-                            ],
-                            tileMode: TileMode.clamp
-                        ),
                       ),
-                      child: Card(
-                        elevation: 8,
-                        color: Colors.transparent,
-                        child: Center(
-                          //width: MediaQuery.of(context).size.height * .9,
-                          //height: 220,
-                          child:
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                            Text(item.activity, style: AppTheme.card3),
-                            Text(item.time, style: AppTheme.card6),])
-                        )
-                      ))
-            ],
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                          child: Container(
+                        constraints: const BoxConstraints.expand(
+                          height: 40,
+                        ),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                          image: AssetImage(item.imagePath),
+                          fit: BoxFit.contain,
+                          alignment: Alignment.topLeft,
+                        )),
+                      ))),
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          item.activity,
+                          style: AppTheme.card3,
+                        ),
+                        Text(item.time, style: AppTheme.card6),
+                      ])
+                ])))
+      ],
     );
   }
 }

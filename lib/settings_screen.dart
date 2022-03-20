@@ -176,7 +176,7 @@ class AccountSettings extends StatelessWidget {
                     Text('Save Changes')
                   ]
               ),
-              onPressed: (){(Navigator.pop(context));}
+              onPressed: (){}
               ),),
             SizedBox(height:10),
             SizedBox(height: 40, child: Text('Test user: account settings disabled', style: TextStyle(color: Colors.red),))
