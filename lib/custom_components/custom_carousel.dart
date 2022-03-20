@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter/material.dart';
-import 'activities_screen.dart';
-import 'app_theme.dart';
-import 'breakpoints.dart';
+import '../activities_screen.dart';
+import '../app_theme.dart';
+import '../breakpoints.dart';
 
 class TopPicks extends StatelessWidget {
   final List<ActivityItem> activitiesList;

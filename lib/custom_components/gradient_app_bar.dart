@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'app_theme.dart';
+import '../app_theme.dart';
 
 class GradientAppBar extends StatelessWidget {
   final String title;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
-import 'custom_carousel.dart';
+import 'custom_components/custom_carousel.dart';
 import 'breakpoints.dart';
 
 final List<ActivityItem> activitiesList = [

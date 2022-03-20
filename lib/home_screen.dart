@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
-import 'gradient_app_bar.dart';
+import 'custom_components/gradient_app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   final void Function(int index) changePage;

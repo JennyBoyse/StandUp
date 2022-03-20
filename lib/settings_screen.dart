@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
-import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'app_theme.dart';
+import 'formData.dart';
 
 class SettingsScreen extends StatelessWidget {
   final void Function(int index) changePage;
@@ -120,30 +120,42 @@ class AccountSettings extends StatelessWidget {
               TextFormField(
                 decoration: InputDecoration(
                   border: UnderlineInputBorder(),
-                  hintText: 'First Name',
+                  labelText: 'Username',
+                  hintText: 'Test User 1',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
+                readOnly: true,
               ),
             TextFormField(
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'Email Address',
+                labelText: 'Email Address',
+                hintText: 'example@example.com',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
+              readOnly: true,
             ),
             TextFormField(
               obscureText: true,
               obscuringCharacter: "*",
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'Password',
+                labelText: 'Password',
+                hintText: '*********',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
+              readOnly: true,
             ),
             TextFormField(
               obscureText: true,
               obscuringCharacter: "*",
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: 'Repeat Password',
+                labelText: 'Repeat Password',
+                hintText: '*********',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
+              readOnly: true,
             ),
             SizedBox(height:20),
             SizedBox(
@@ -156,7 +168,7 @@ class AccountSettings extends StatelessWidget {
                 padding: const EdgeInsets.all(5),
                 primary: AppTheme.white,
                 textStyle: AppTheme.subtitle,
-                backgroundColor: AppTheme.blue,
+                backgroundColor: AppTheme.darkGrey,
               ),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -164,7 +176,11 @@ class AccountSettings extends StatelessWidget {
                     Text('Save Changes')
                   ]
               ),
-              onPressed: (){(Navigator.pop(context));}))]
+              onPressed: (){(Navigator.pop(context));}
+              ),),
+            SizedBox(height:10),
+            SizedBox(height: 40, child: Text('Test user: account settings disabled', style: TextStyle(color: Colors.red),))
+          ],
         )
     ));
   }
@@ -179,53 +195,62 @@ class WorkdaySettings extends StatefulWidget {
 
 class _WorkdaySettingsState extends State<WorkdaySettings> {
   String _duration = '01:00';
-  String _durationResult = '';
-  final formKey = new GlobalKey<FormState>();
+  String _interval = '00:30';
 
+  final formKey = GlobalKey<FormState>();
+  Model model = Model(startTime: '09:00',endTime: '17:00',lunchBreak: '12:30',lunchDuration: '01:00',breakInterval: '00:30',);
+
+  final _durations = ["00:30", "01:00", "01:30", "02:00",];
+
+  final _intervals = ["00:15", "00:30", "00:45", "01:00",];
+
+  @override
   void initState() {
     super.initState();
     _duration = '01:00';
-    _durationResult = '';
+    _interval = '00:30';
   }
 
-  _saveForm() {
+  /*_saveForm() {
     var form = formKey.currentState;
     if (form!.validate()) {
       form.save();
       setState(() {
-        _durationResult = _duration;
+        _newDuration = _duration;
+        _newInterval = _interval;
       });
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context){
+
     return Container(
         padding: const EdgeInsets.fromLTRB(20,0,20,0),
         child: Form(key: formKey, autovalidateMode: AutovalidateMode.always, child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+            children: <Widget>[
               DateTimePicker(
                 type: DateTimePickerType.time,
-                initialValue: '09:00',
+                initialValue: model.startTime,
                 timeLabelText: 'Start time',
                 onChanged: (val) => print(val),
                 validator: (val) {
                   print(val);
                   return null;
                 },
-                onSaved: (val) => print(val),
+                onSaved: (val) => model.startTime = val!,
               ),
               DateTimePicker(
                 type: DateTimePickerType.time,
-                initialValue: '18:00',
+                initialValue: model.endTime,
                 timeLabelText: 'End time',
                 onChanged: (val) => print(val),
                 validator: (val) {
                   print(val);
                   return null;
                 },
-                onSaved: (val) => print(val),
+                onSaved: (val) => model.endTime = val!,
               ),
               DateTimePicker(
                 type: DateTimePickerType.time,
@@ -236,49 +261,62 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
                   print(val);
                   return null;
                 },
-                onSaved: (val) => print(val),
+                onSaved: (val) => model.lunchBreak = val!,
               ),
-              DropDownFormField(
-                titleText: 'Lunch break duration',
-                hintText: 'Please select a duration',
-                value: _duration,
-                onSaved: (value){
-                  setState((){
-                    _duration = value;
-                  });
-                },
-                onChanged: (value) {
-                  setState(() {
-                    _duration = value;
-                  });
-                },
-                dataSource: const [
-                  {
-                    "display":"30 minutes",
-                    "value":"00:30",
-                  },
-                  {
-                    "display":"1 hour",
-                    "value":"01:00",
-                  },
-                  {
-                    "display":"1 hour 30 minutes",
-                    "value":"01:30",
-                  },
-                  {
-                    "display":"2 hours",
-                    "value":"02:00",
-                  },
-                ],
-                textField: 'display',
-                valueField: 'value',
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  hintText: 'Interval',
-                ),
-              ),
+              FormField<String>(
+                  builder: (FormFieldState<String> state) {
+                return InputDecorator(
+                    decoration: const InputDecoration(
+                        labelText: 'Lunch break duration',
+                        hintText: 'Please select a duration',),
+                    isEmpty: _duration == '',
+                    child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                      value: _duration,
+                      isDense: true,
+                      underline: Container(
+                        height: 2,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _duration = value!;
+                        });
+                      },
+                      items: _durations.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    )));
+              }),
+              FormField<String>(
+                  builder: (FormFieldState<String> state) {
+                    return InputDecorator(
+                        decoration: const InputDecoration(
+                          labelText: 'Interval between breaks',
+                          hintText: 'Please select an interval',),
+                        isEmpty: _interval == '',
+                        child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              value: _interval,
+                              isDense: true,
+                              underline: Container(
+                                height: 2,
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  _interval = value!;
+                                });
+                              },
+                              items: _intervals.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            )));
+                  }),
               const SizedBox(height:20),
               SizedBox(
                 width: 200,
@@ -298,7 +336,11 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
                           Text('Save Changes')
                         ]
                     ),
-                    onPressed: _saveForm,))]
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        formKey.currentState!.save();
+                      }
+                    },))]
         ))
     );
   }
