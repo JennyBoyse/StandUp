@@ -76,7 +76,7 @@ class TipsScreen extends StatelessWidget {
                                   ),),
                                 ]
                             ),
-                            const SizedBox(height: 30, child: DecoratedBox(decoration: BoxDecoration(color: AppTheme.lightGrey))),
+                            const SizedBox(height: 20, child: DecoratedBox(decoration: BoxDecoration(color: AppTheme.lightGrey))),
                             Row(
                                 children: [
                                   Container(
@@ -113,7 +113,7 @@ class TipsScreen extends StatelessWidget {
                                   ),),
                                 ]
                             ),
-                            const SizedBox(height: 30, child: DecoratedBox(decoration: BoxDecoration(color: AppTheme.lightGrey))),
+                            const SizedBox(height: 20, child: DecoratedBox(decoration: BoxDecoration(color: AppTheme.lightGrey))),
                             Row(
                                 children: [
                                   Container(
@@ -150,7 +150,7 @@ class TipsScreen extends StatelessWidget {
                                   ),),
                                 ]
                             ),
-                            const SizedBox(height: 30, child: DecoratedBox(decoration: BoxDecoration(color: AppTheme.lightGrey))),
+                            const SizedBox(height: 20, child: DecoratedBox(decoration: BoxDecoration(color: AppTheme.lightGrey))),
                             Row(
                                 children: [
                                   Container(
@@ -187,7 +187,7 @@ class TipsScreen extends StatelessWidget {
                                   ),),
                                 ]
                             ),
-                            const SizedBox(height: 30, child: DecoratedBox(decoration: BoxDecoration(color: AppTheme.lightGrey))),
+                            const SizedBox(height: 20, child: DecoratedBox(decoration: BoxDecoration(color: AppTheme.lightGrey))),
                             Row(
                                 children: [
                                   Container(

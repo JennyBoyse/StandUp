@@ -8,6 +8,7 @@ class ActivitySubpage extends StatelessWidget {
   final String intensity;
   final String instructionsList;
 
+
   ActivitySubpage(
       {Key? key,
       required this.activity,
@@ -61,11 +62,11 @@ class ActivitySubpage extends StatelessWidget {
                         SizedBox(height: 20),
                         Row(children: [
                           Text('Time:', style: AppTheme.body2),
-                          SizedBox(width: 5),
+                          SizedBox(width: screenWidth * 0.03),
                           Text(time, style: AppTheme.body3),
-                          SizedBox(width: screenWidth * 0.2),
+                          SizedBox(width: screenWidth * 0.08),
                           Text('Intensity:', style: AppTheme.body2),
-                          SizedBox(width: 5),
+                          SizedBox(width: screenWidth * 0.03),
                           Text(intensity, style: AppTheme.body3),
                         ]),
                         SizedBox(
@@ -147,7 +148,7 @@ class ActivitySubpage extends StatelessWidget {
                                             MainAxisAlignment.center,
                                         children: const [
                                           Icon(Icons.arrow_back_ios_sharp,
-                                              color: AppTheme.lightGrey,
+                                              color: AppTheme.darkGrey,
                                               size: 15),
                                           SizedBox(width: 10),
                                           Text('Back to activities list')

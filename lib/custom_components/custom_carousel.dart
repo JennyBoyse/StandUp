@@ -125,32 +125,89 @@ class TopPicks extends StatelessWidget {
   }
 }
 
-class ActivitiesGrid extends StatelessWidget {
+class ActivitiesGrid extends StatefulWidget {
   const ActivitiesGrid(
       {Key? key, required this.crossAxisCount, required this.activitiesList})
       : assert(crossAxisCount == 1 || crossAxisCount == 2),
         super(key: key);
+
   final int crossAxisCount;
   final List<ActivityItem> activitiesList;
 
   @override
+  _ActivitiesGridState createState() => _ActivitiesGridState();
+}
+
+class _ActivitiesGridState extends State<ActivitiesGrid> {
+  late final List<String> items = [];
+
+  final duplicateItems = List<String>.generate(activitiesList.length, (i) => activitiesList[i].activity);
+
+  @override
+  void initState() {
+    items.addAll(duplicateItems);
+    super.initState();
+  }
+
+  void filterSearchResults(String query) {
+    List<String> dummySearchList = [];
+    dummySearchList.addAll(duplicateItems);
+    if (query.isNotEmpty) {
+      List<String> dummyListData = [];
+      dummySearchList.forEach((item) {
+        if(item.contains(query)) {dummyListData.add(item);}
+      });
+      setState(() {
+        items.clear();
+        items.addAll(dummyListData);
+      });
+      return;
+    } else {
+      setState(() {
+        items.clear();
+        items.addAll(duplicateItems);
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    TextEditingController editingController = TextEditingController();
+
     final rowSizes =
-        List.generate(activitiesList.length ~/ crossAxisCount, (_) => auto);
-    return LayoutGrid(
-      columnSizes: crossAxisCount == 2 ? [1.fr, 1.fr] : [1.fr],
-      // flexible column sizes based on crossAxisCount
-      rowSizes: rowSizes,
-      // self-sizing row height
-      rowGap: 10,
-      // equivalent to mainAxisSpacing
-      columnGap: 5,
-      //equivalent to crossAxisSpacing
-      children: [
-        for (var i = 0; i < activitiesList.length; i++)
-          SelectCard(item: activitiesList[i]),
-      ],
-    );
+        List.generate(activitiesList.length ~/ widget.crossAxisCount, (_) => auto);
+    return Container(
+        child: Column(
+            children: <Widget>[
+          /*Padding(padding: const EdgeInsets.fromLTRB(10,0,10,0),
+            child: TextField(
+              onChanged: (value) {
+                filterSearchResults(value);
+              },
+              controller: editingController,
+              decoration: const InputDecoration(
+                hintText: 'Search activities',
+                prefixIcon: Icon(Icons.search),
+                border: UnderlineInputBorder(),
+              ),
+            )
+          ),*/ // TODO: Implement searchbar for activities list
+      const SizedBox(height: 15),
+      LayoutGrid(
+        columnSizes: widget.crossAxisCount == 2 ? [1.fr, 1.fr] : [1.fr],
+        // flexible column sizes based on crossAxisCount
+        rowSizes: rowSizes,
+        // self-sizing row height
+        rowGap: 10,
+        // equivalent to mainAxisSpacing
+        columnGap: 5,
+        //equivalent to crossAxisSpacing
+        children: [
+          for (var i = 0; i < activitiesList.length; i++)
+            SelectCard(item: activitiesList[i]),
+        ],
+      )
+    ]));
   }
 }
 
@@ -163,6 +220,7 @@ class SelectCard extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final horizontalPadding = screenWidth >= Breakpoints.tablet ? 32.0 : 20.0;
     final verticalPadding = screenWidth >= Breakpoints.tablet ? 24.0 : 16.0;
+
     return Stack(
       alignment: Alignment.center,
       children: <Widget>[
@@ -171,7 +229,6 @@ class SelectCard extends StatelessWidget {
             height: 140,
             padding: EdgeInsets.all(15),
             decoration: const BoxDecoration(
-              //image: DecorationImage(fit: BoxFit.fitWidth, image: AssetImage(item.image),
               borderRadius: BorderRadius.all(Radius.circular(10)),
               gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
@@ -182,41 +239,53 @@ class SelectCard extends StatelessWidget {
                   ],
                   tileMode: TileMode.clamp),
             ),
-            child: Card(
-                elevation: 8,
-                color: Colors.transparent,
-                child: Stack(children: <Widget>[
-                  Container(
-                      width: 50,
-                      height: 50,
-                      decoration: const BoxDecoration(
-                        color: AppTheme.purple,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(10),
-                          child: Container(
-                        constraints: const BoxConstraints.expand(
-                          height: 40,
-                        ),
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                          image: AssetImage(item.imagePath),
-                          fit: BoxFit.contain,
-                          alignment: Alignment.topLeft,
-                        )),
-                      ))),
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          item.activity,
-                          style: AppTheme.card3,
-                        ),
-                        Text(item.time, style: AppTheme.card6),
-                      ])
-                ])))
+            child: GestureDetector(
+                onTap: () => {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ActivitySubpage(
+                                    activity: item.activity,
+                                    time: item.time,
+                                    intensity: item.intensity,
+                                    instructionsList: item.instructionsList,
+                                  )))
+                    },
+                child: Card(
+                    elevation: 10,
+                    color: Colors.transparent,
+                    child: Stack(children: <Widget>[
+                      Container(
+                          width: 50,
+                          height: 50,
+                          decoration: const BoxDecoration(
+                            color: AppTheme.purple2,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Container(
+                                constraints: const BoxConstraints.expand(
+                                  height: 40,
+                                ),
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                  image: AssetImage(item.imagePath),
+                                  fit: BoxFit.contain,
+                                  alignment: Alignment.topLeft,
+                                )),
+                              ))),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              item.activity,
+                              style: AppTheme.card3,
+                            ),
+                            Text(item.time, style: AppTheme.card6),
+                          ])
+                    ]))))
       ],
     );
   }

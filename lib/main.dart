@@ -58,7 +58,7 @@ class _AbstractPageState extends State<AbstractPage> {
     _pageOptions = [
       HomeScreen(changePage: temp),
       ActivitiesScreen(changePage: temp),
-      const StatisticsScreen(),
+      StatisticsScreen(changePage: temp),
       TipsScreen(changePage: temp),
       SettingsScreen(changePage: temp)
     ];

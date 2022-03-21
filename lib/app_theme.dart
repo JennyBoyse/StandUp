@@ -21,6 +21,7 @@ class AppTheme {
   static const Color lightBlue = Color(0xFFBFEAFF);
   static const Color darkBlue = Color(0xFF0071A8);
   static const Color purple = Color(0xFF7B61FF);
+  static const Color purple2 = Color(0xFF6b4efc);
 
   static const String fontName = 'Ubuntu';
 
@@ -72,6 +73,14 @@ class AppTheme {
     fontSize: 32,
     letterSpacing: 0.27,
     color: darkBlue,
+  );
+
+  static const TextStyle subtitle3 = TextStyle(
+    fontFamily: fontName,
+    fontWeight: FontWeight.bold,
+    fontSize: 20,
+    letterSpacing: 0.27,
+    color: black,
   );
 
   static const TextStyle body1 = TextStyle(

@@ -28,19 +28,19 @@ class SettingsScreen extends StatelessWidget {
         ],
         title: const Text("Settings", style: AppTheme.headline,),
         backgroundColor: Colors.transparent, elevation: 0.0,),
-      body: Center(child: Column(children: [const SizedBox(height: 20), Container(
+      body: Center(child: Column(children: [const SizedBox(height: 20), /*Container(
         width: screenWidth * 0.9,
         height: screenHeight * 0.15,
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(5.0),
         child: Column(
-                children: [Container(
+                children: [Center(child: Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppTheme.white,
                     border: Border.all(color: AppTheme.blue, width: 4),
                   ),
-                  child: const CircleAvatar(radius: 30.0, child: ClipRRect(child: Icon(Icons.person_pin_rounded, color: AppTheme.lightPurple, size:40)), backgroundColor: Colors.transparent),
-                ),
+                  child: CircleAvatar(radius: screenWidth*0.08, child: ClipRRect(child: Icon(Icons.person_pin_rounded, color: AppTheme.lightPurple, size:40)), backgroundColor: Colors.transparent),
+                )),
                 ]),
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -57,7 +57,7 @@ class SettingsScreen extends StatelessWidget {
                 ],
                 tileMode: TileMode.clamp
             )),
-      ),
+      ),*/
         Expanded(child: Scaffold(
             body: Container(
               padding: const EdgeInsets.fromLTRB(20,0,20,0),
