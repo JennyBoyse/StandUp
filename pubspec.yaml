@@ -37,9 +37,13 @@ dependencies:
   carousel_slider: ^4.0.0
   flutter_layout_grid: ^1.0.6
   date_time_picker: ^2.1.0
-  validators: ^2.0.0+1
+  validators: ^2.0.1
   custom_timer: ^0.1.1
   fl_chart: ^0.46.0
+  firebase_core: ^1.13.1
+  firebase_messaging: ^10.0.0
+  flutter_local_notifications: ^9.4.0
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:

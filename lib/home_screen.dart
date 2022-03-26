@@ -12,8 +12,7 @@ class HomeScreen extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Center(
-        child: ListView(
+      body: ListView(
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
             children: <Widget>[
@@ -176,7 +175,7 @@ class HomeScreen extends StatelessWidget {
                     )
                   ])),
               //_pages.elementAt(_pageIndex)],
-            ]),
+            ]
       ),
     );
   }

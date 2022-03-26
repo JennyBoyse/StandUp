@@ -1,15 +1,29 @@
+import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:stand_up_2/home_screen.dart';
-import 'package:stand_up_2/settings_screen.dart';
-import 'package:stand_up_2/statistics_screen.dart';
-import 'package:stand_up_2/tips_screen.dart';
+import 'package:stand_up_2/services/local_notification_service.dart';
+
+import 'home_screen.dart';
+import 'settings_screen.dart';
+import 'statistics_screen.dart';
+import 'tips_screen.dart';
 import 'activities_screen.dart';
 import 'app_theme.dart';
 
-void main() async {
+// receive message when app in background
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}
+
+//late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   runApp(const StandUp());
 }
 
@@ -24,7 +38,9 @@ class StandUp extends StatelessWidget {
       title: _title,
       theme: ThemeData(fontFamily: 'Ubuntu'),
       home: const AbstractPage(),
-    );
+      routes: {
+          'homescreen': (context) => StandUp(),
+        });
   }
 }
 
@@ -71,46 +87,92 @@ class _AbstractPageState extends State<AbstractPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    LocalNotificationService.initialize(context);
+
+    FirebaseMessaging.instance.requestPermission().then((value) {
+      print(value);
+    });
+
+    FirebaseMessaging.instance.getToken().then((token) {
+      print(token);
+    });
+
+    FirebaseMessaging.instance.getAPNSToken().then((APNStoken) {
+      print(APNStoken);
+    });
+
+    // gives the message and opens app from terminated state
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if(message != null) {
+        final routeFromMessage = message.data["route"];
+
+        Navigator.of(context).pushNamed(routeFromMessage);
+      }
+    });
+
+    // foreground notification
+    FirebaseMessaging.onMessage.listen((message) {
+      if(message.notification != null) {
+        print(message.notification!.body);
+        print(message.notification!.title);
+      }
+      LocalNotificationService.display(message);
+    });
+
+    // onTap notification action - app is in background but open
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      final routeFromMessage = message.data["route"];
+      Navigator.of(context).pushNamed(routeFromMessage);
+    });
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.lightGrey,
-      body: _pageOptions[_currentIndex],
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0), ),
-        child: BottomNavigationBar(
-          onTap: _onItemTapped,
-          currentIndex: _currentIndex,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-              backgroundColor: AppTheme.darkGrey,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.directions_run),
-              label: 'Activities',
-              backgroundColor: AppTheme.darkGrey,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.auto_graph),
-              label: 'Statistics',
-              backgroundColor: AppTheme.darkGrey,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.lightbulb),
-              label: 'Tips',
-              backgroundColor: AppTheme.darkGrey,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
-              backgroundColor: AppTheme.darkGrey,
-            ),
-          ],
-          selectedItemColor: AppTheme.blue,
+        backgroundColor: AppTheme.lightGrey,
+        body: _pageOptions[_currentIndex],
+        bottomNavigationBar: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(15.0),
+            topRight: Radius.circular(15.0),
+          ),
+          child: BottomNavigationBar(
+            onTap: _onItemTapped,
+            currentIndex: _currentIndex,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+                backgroundColor: AppTheme.darkGrey,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.directions_run),
+                label: 'Activities',
+                backgroundColor: AppTheme.darkGrey,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.auto_graph),
+                label: 'Statistics',
+                backgroundColor: AppTheme.darkGrey,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.lightbulb),
+                label: 'Tips',
+                backgroundColor: AppTheme.darkGrey,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Settings',
+                backgroundColor: AppTheme.darkGrey,
+              ),
+            ],
+            selectedItemColor: AppTheme.blue,
+          ),
         ),
-      ),
-      appBar: null
-    );
+        appBar: null);
   }
 }

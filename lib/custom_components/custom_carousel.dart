@@ -194,7 +194,7 @@ class _ActivitiesGridState extends State<ActivitiesGrid> {
           ),*/ // TODO: Implement searchbar for activities list
       const SizedBox(height: 15),
       LayoutGrid(
-        columnSizes: widget.crossAxisCount == 2 ? [1.fr, 1.fr] : [1.fr],
+        columnSizes: widget.crossAxisCount == 2 ? [1.fr, 1.fr] : [1.fr, 1.fr],
         // flexible column sizes based on crossAxisCount
         rowSizes: rowSizes,
         // self-sizing row height

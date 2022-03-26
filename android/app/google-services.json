@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "319237667307",
+    "project_id": "stand-up-db428",
+    "storage_bucket": "stand-up-db428.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319237667307:android:1c9feb92d4cd34a829c1ae",
+        "android_client_info": {
+          "package_name": "com.example.stand_up_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "319237667307-s3dhtvbi403acdj3f604mjvjoh7gmbcb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFREevaLq_CnxIyclNbNRgezwynVTR60M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "319237667307-s3dhtvbi403acdj3f604mjvjoh7gmbcb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "319237667307-jvb7t0sugitmemif3p42imgg1ri8gpoq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.standUp2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
