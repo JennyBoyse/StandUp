@@ -26,9 +26,9 @@ class LocalNotificationService {
 
     final cron = Cron() ..schedule(Schedule.parse('*/1 * * * * *'), () async {
       try {print('message triggered');
-        final id = DateTime.now().millisecondsSinceEpoch ~/1000;
-        const NotificationDetails notificationDetails = NotificationDetails(
-          android: AndroidNotificationDetails(
+      final id = DateTime.now().millisecondsSinceEpoch ~/1000;
+      const NotificationDetails notificationDetails = NotificationDetails(
+        android: AndroidNotificationDetails(
             "easyapproach",
             "easyapproach channel",
             importance: Importance.max,
