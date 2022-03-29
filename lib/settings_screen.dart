@@ -198,10 +198,9 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
   String _interval = '00:30';
 
   final formKey = GlobalKey<FormState>();
-  Model model = Model(startTime: '09:00',endTime: '17:00',lunchBreak: '12:30',lunchDuration: '01:00',breakInterval: '00:30',);
+  Model model = Model(startTime: '09:00', endTime: '17:00', lunchBreak: '12:30', lunchDuration: '01:00', breakInterval: '00:30',);
 
   final _durations = ["00:30", "01:00", "01:30", "02:00",];
-
   final _intervals = ["00:15", "00:30", "00:45", "01:00",];
 
   @override
