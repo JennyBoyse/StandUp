@@ -1,10 +1,9 @@
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+
 import 'data/form_data.dart';
 import 'data/form_data_dao.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/ui/firebase_list.dart';
-import 'package:firebase_database/firebase_database.dart';
-
 
 class UserData{
   static final dataDao = FormDataDao();
@@ -26,21 +25,18 @@ class UserData{
       }
   }
 
-  static getSpecificUser(query, key) {
-    DatabaseReference reference = query.orderByKey<Object?, Object?>().equalTo(key);
-    print(reference);
-    return reference;
+  static getKeyValue(data, key) {
+    return data[key];
   }
 
   static getUserData(obj, key) {
-    FirebaseList(
-        query: dataDao.getDataQuery(),
-        onValue: (snapshot) {
-          final json = snapshot.value as Map<Object?, Object?>;
-          final data = FormData.fromJson(getSpecificUser(json, key));
-          print(data);
-          obj = data;
-        },
+    FirebaseAnimatedList(
+      query: dataDao.getDataQuery(),
+      itemBuilder: (context, snapshot, animation, index) {
+        final json = snapshot.value as Map<Object?, Object?>;
+        final data = getKeyValue(json, key);
+        return data;
+      },
     );
   }
   static bool _canSendData() => _dataController.text.isNotEmpty;

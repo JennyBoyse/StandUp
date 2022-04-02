@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import '../app_theme.dart';
 import '../data/form_data.dart';
+import '../data/form_data_dao.dart';
 import '../data_list.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -165,8 +166,9 @@ class WorkdaySettings extends StatefulWidget {
 }
 
 class _WorkdaySettingsState extends State<WorkdaySettings> {
-  String _duration = '01:00';
-  String _interval = '00:30';
+  late String _duration;
+  late String _interval;
+  static const String initialID = 'standuptestuser+9';
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   late Future<String?> _userID;
@@ -175,7 +177,6 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
 
   Future<void> _updateUserID() async{
     final SharedPreferences prefs = await _prefs;
-    //SharedPreferences.setMockInitialValues(values);
     final String? userID = (prefs.getString('userID'));
 
     setState(() {
@@ -196,7 +197,7 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
     _userID = _prefs.then((SharedPreferences prefs) {
       return prefs.getString('userID');
     });
-    UserData.getUserData(model, 'standuptestuser+9');
+    UserData.getUserData(model, initialID);
     _duration = '01:00';
     _interval = '00:30';
   }
@@ -217,9 +218,9 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
             children: <Widget>[
               TextFormField(
                 decoration: const InputDecoration(
-                  hintText: 'standuptestuser@gmail.com',
+                  hintText: 'e.g. standuptestuser@gmail.com',
                   border: UnderlineInputBorder(),
-                  labelText: 'Email Address',
+                  labelText: 'Test Email Address',
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
                 onChanged: (val) => _updateUserID,
@@ -339,7 +340,7 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
                             }
                           }
                         );
-                        UserData.addData;
+                        UserData.addData(model);
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(backgroundColor: AppTheme.lightGrey, content: Text('Processing Data...',style:AppTheme.card2)),
                         );
