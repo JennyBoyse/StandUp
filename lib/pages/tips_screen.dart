@@ -4,7 +4,7 @@ import 'package:stand_up_2/tips_cards/ergonomics_tips.dart';
 import 'package:stand_up_2/tips_cards/lighting_tips.dart';
 import 'package:stand_up_2/tips_cards/noise_tips.dart';
 import 'package:stand_up_2/tips_cards/workspace_tips.dart';
-import 'app_theme.dart';
+import '../app_theme.dart';
 
 class TipsScreen extends StatelessWidget {
   final void Function(int index) changePage;

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "319237667307",
+    "firebase_url": "https://stand-up-db428-default-rtdb.firebaseio.com",
     "project_id": "stand-up-db428",
     "storage_bucket": "stand-up-db428.appspot.com"
   },

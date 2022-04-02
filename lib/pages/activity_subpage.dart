@@ -127,6 +127,7 @@ class ActivitySubpage extends StatelessWidget {
                                                                         ]))))))
                                               ])))),
                             ])),
+                        SizedBox(height: 20),
                         Center(
                             child: Container(
                                 width: 200,

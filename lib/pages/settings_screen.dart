@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
-import 'app_theme.dart';
-import 'formData.dart';
+import '../app_theme.dart';
+import '../data/form_data.dart';
+import '../data_list.dart';
+import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatelessWidget {
   final void Function(int index) changePage;
@@ -13,9 +16,6 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
@@ -28,36 +28,7 @@ class SettingsScreen extends StatelessWidget {
         ],
         title: const Text("Settings", style: AppTheme.headline,),
         backgroundColor: Colors.transparent, elevation: 0.0,),
-      body: Center(child: Column(children: [const SizedBox(height: 20), /*Container(
-        width: screenWidth * 0.9,
-        height: screenHeight * 0.15,
-        padding: const EdgeInsets.all(5.0),
-        child: Column(
-                children: [Center(child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppTheme.white,
-                    border: Border.all(color: AppTheme.blue, width: 4),
-                  ),
-                  child: CircleAvatar(radius: screenWidth*0.08, child: ClipRRect(child: Icon(Icons.person_pin_rounded, color: AppTheme.lightPurple, size:40)), backgroundColor: Colors.transparent),
-                )),
-                ]),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: const AssetImage('assets/images/activity_card_background.png'),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.2), BlendMode.dstATop)),
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-            gradient: const LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [
-                  AppTheme.darkPurple,
-                  AppTheme.lightPurple,
-                ],
-                tileMode: TileMode.clamp
-            )),
-      ),*/
+      body: Center(child: Column(children: [const SizedBox(height: 20),
         Expanded(child: Scaffold(
             body: Container(
               padding: const EdgeInsets.fromLTRB(20,0,20,0),
@@ -121,7 +92,7 @@ class AccountSettings extends StatelessWidget {
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Username',
-                  hintText: 'Test User 1',
+                  hintText: 'Test User',
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
                 readOnly: true,
@@ -130,7 +101,7 @@ class AccountSettings extends StatelessWidget {
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: 'Email Address',
-                hintText: 'example@example.com',
+                hintText: '****@gmail.com',
                 floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
               readOnly: true,
@@ -179,7 +150,7 @@ class AccountSettings extends StatelessWidget {
               onPressed: (){}
               ),),
             SizedBox(height:10),
-            SizedBox(height: 40, child: Text('Test user: account settings disabled', style: TextStyle(color: Colors.red),))
+            const SizedBox(height: 40, child: Text('Test user: account settings disabled', style: TextStyle(color: Colors.red),))
           ],
         )
     ));
@@ -187,7 +158,7 @@ class AccountSettings extends StatelessWidget {
 }
 
 class WorkdaySettings extends StatefulWidget {
-  const WorkdaySettings({Key? key}) : super(key: key);
+  const WorkdaySettings ({Key? key}) : super(key: key);
 
   @override
   _WorkdaySettingsState createState() => _WorkdaySettingsState();
@@ -197,45 +168,72 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
   String _duration = '01:00';
   String _interval = '00:30';
 
-  final formKey = GlobalKey<FormState>();
-  Model model = Model(startTime: '09:00', endTime: '17:00', lunchBreak: '12:30', lunchDuration: '01:00', breakInterval: '00:30',);
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  late Future<String?> _userID;
 
+  Map<String, Object> values = <String, Object>{'userID': ""};
+
+  Future<void> _updateUserID() async{
+    final SharedPreferences prefs = await _prefs;
+    //SharedPreferences.setMockInitialValues(values);
+    final String? userID = (prefs.getString('userID'));
+
+    setState(() {
+      _userID = prefs.setString('userID', userID!).then((bool success) {
+        return userID;
+      });
+    });
+  }
+
+  final formKey = GlobalKey<FormState>();
+  late FormData model = FormData("","","","","","",DateTime.now());
   final _durations = ["00:30", "01:00", "01:30", "02:00",];
   final _intervals = ["00:15", "00:30", "00:45", "01:00",];
 
   @override
   void initState() {
     super.initState();
+    _userID = _prefs.then((SharedPreferences prefs) {
+      return prefs.getString('userID');
+    });
+    UserData.getUserData(model, 'standuptestuser+9');
     _duration = '01:00';
     _interval = '00:30';
   }
 
-  /*_saveForm() {
-    var form = formKey.currentState;
-    if (form!.validate()) {
-      form.save();
-      setState(() {
-        _newDuration = _duration;
-        _newInterval = _interval;
-      });
-    }
-  }*/
+  static getUserID(email) {
+    var arr = email.split('@');
+    return arr[0];
+  }
 
   @override
   Widget build(BuildContext context){
+    WidgetsBinding.instance.addPostFrameCallback((_) => UserData.scrollToBottom);
 
     return Container(
         padding: const EdgeInsets.fromLTRB(20,0,20,0),
         child: Form(key: formKey, autovalidateMode: AutovalidateMode.always, child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'standuptestuser@gmail.com',
+                  border: UnderlineInputBorder(),
+                  labelText: 'Email Address',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                ),
+                onChanged: (val) => _updateUserID,
+                validator: (val) {
+                  return null;
+                },
+                onSaved: (val) => model.email = val!,
+              ),
               DateTimePicker(
                 type: DateTimePickerType.time,
                 initialValue: model.startTime,
                 timeLabelText: 'Start time',
                 onChanged: (val) => print(val),
                 validator: (val) {
-                  print(val);
                   return null;
                 },
                 onSaved: (val) => model.startTime = val!,
@@ -246,7 +244,6 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
                 timeLabelText: 'End time',
                 onChanged: (val) => print(val),
                 validator: (val) {
-                  print(val);
                   return null;
                 },
                 onSaved: (val) => model.endTime = val!,
@@ -257,7 +254,6 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
                 timeLabelText: 'Lunch break',
                 onChanged: (val) => print(val),
                 validator: (val) {
-                  print(val);
                   return null;
                 },
                 onSaved: (val) => model.lunchBreak = val!,
@@ -288,7 +284,7 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
                         );
                       }).toList(),
                     )));
-              }),
+                  }),
               FormField<String>(
                   builder: (FormFieldState<String> state) {
                     return InputDecorator(
@@ -317,29 +313,41 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
                             )));
                   }),
               const SizedBox(height:20),
-              SizedBox(
-                width: 200,
-                height: 40,
-                child: TextButton(
-                    style: TextButton.styleFrom(
-                      minimumSize: const Size.fromHeight(20),
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(5),
-                      primary: AppTheme.white,
-                      textStyle: AppTheme.subtitle,
-                      backgroundColor: AppTheme.blue,
-                    ),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text('Save Changes')
-                        ]
-                    ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: ElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        formKey.currentState!.save();
+                        formKey.currentState?.save();
+                        model.lunchDuration = _duration;
+                        model.breakInterval = _interval;
+                        FutureBuilder<String?>(
+                          future: _userID,
+                          builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.waiting:
+                                return const CircularProgressIndicator();
+                              default:
+                                if (snapshot.hasError) {
+                                  return Text('Error: ${snapshot.error}');
+                                }
+                                else {
+                                  return Text(
+                                    'Button tapped ${snapshot.data} time${snapshot.data == 1 ? '' : 's'}.\n\n'
+                                  );
+                                }
+                            }
+                          }
+                        );
+                        UserData.addData;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(backgroundColor: AppTheme.lightGrey, content: Text('Processing Data...',style:AppTheme.card2)),
+                        );
                       }
-                    },))]
+                    },
+                  child: const Text('Save Changes'),
+                ),
+              )]
         ))
     );
   }

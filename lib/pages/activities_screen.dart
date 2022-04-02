@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'app_theme.dart';
-import 'custom_components/custom_carousel.dart';
-import 'breakpoints.dart';
+import '../app_theme.dart';
+import '../custom_components/custom_carousel.dart';
+import '../breakpoints.dart';
 
 final List<ActivityItem> activitiesList = [
   const ActivityItem(activity:'Lunge', time: '3 minutes', intensity:'Low', category:'test', instructionsList: '1. Start in a standing position with your feet hip-width apart. \n\n 2. Step forward longer than a walking stride so one leg is ahead of your torso and the other is behind. Your foot should land flat and remain flat while it’s on the ground. Your rear heel will rise off of the ground. \n\n 3. Bend your knees to approximately 90 degrees as you lower yourself. Remember to keep your trunk upright and core engaged.\n\n 4. Then, forcefully push off from your front leg to return to the starting position.', imagePath: 'assets/images/activity_icons/lunge.png'),

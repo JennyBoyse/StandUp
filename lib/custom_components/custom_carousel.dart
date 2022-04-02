@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter/material.dart';
-import '../activities_screen.dart';
-import '../activity_subpage.dart';
+import '../pages/activities_screen.dart';
+import '../pages/activity_subpage.dart';
 import '../app_theme.dart';
 import '../breakpoints.dart';
 

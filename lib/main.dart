@@ -4,11 +4,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:stand_up_2/services/local_notification_service.dart';
 
-import 'home_screen.dart';
-import 'settings_screen.dart';
-import 'statistics_screen.dart';
-import 'tips_screen.dart';
-import 'activities_screen.dart';
+import 'pages/home_screen.dart';
+import 'pages/settings_screen.dart';
+import 'pages/statistics_screen.dart';
+import 'pages/tips_screen.dart';
+import 'pages/activities_screen.dart';
 import 'app_theme.dart';
 
 // receive message when app in background
