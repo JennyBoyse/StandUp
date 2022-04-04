@@ -15,7 +15,13 @@ class FormData {
         endTime = json['endTime'] as String?,
         lunchBreak = json['lunchBreak'] as String?,
         lunchDuration = json['lunchDuration'] as String?,
-        breakInterval = json['interval'] as String?;
+        breakInterval = json['interval'] as String?,
+        date = DateTime.parse(json['lastProcessed'] as String);
+
+  @override
+  String toString() {
+    return '{$email, $startTime, $endTime, $lunchBreak, $lunchDuration, $breakInterval, $date}';
+  }
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
     'lastProcessed': date.toString(),

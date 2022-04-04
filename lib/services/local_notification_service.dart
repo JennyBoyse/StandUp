@@ -29,8 +29,8 @@ class LocalNotificationService {
       final id = DateTime.now().millisecondsSinceEpoch ~/1000;
       const NotificationDetails notificationDetails = NotificationDetails(
         android: AndroidNotificationDetails(
-            "easyapproach",
-            "easyapproach channel",
+            "StandUp",
+            "StandUp channel",
             importance: Importance.max,
             priority: Priority.high,
           ),

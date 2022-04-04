@@ -1,5 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-
+import 'package:firebase_database/ui/firebase_list.dart';
 import 'data/form_data.dart';
 import 'data/form_data_dao.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,16 +30,18 @@ class UserData{
     return data[key];
   }
 
-  static getUserData(obj, key) {
-    FirebaseAnimatedList(
+  static getUserData(key) async {
+    FirebaseList(
       query: dataDao.getDataQuery(),
-      itemBuilder: (context, snapshot, animation, index) {
+      onValue: (snapshot) {
         final json = snapshot.value as Map<Object?, Object?>;
         final data = getKeyValue(json, key);
+        print(data);
         return data;
       },
     );
   }
+
   static bool _canSendData() => _dataController.text.isNotEmpty;
 
   static void scrollToBottom() {

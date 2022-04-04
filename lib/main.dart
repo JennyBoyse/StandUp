@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:stand_up_2/services/local_notification_service.dart';
@@ -11,15 +12,15 @@ import 'pages/tips_screen.dart';
 import 'pages/activities_screen.dart';
 import 'app_theme.dart';
 
-// receive message when app in background
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-}
+// // receive message when app in background
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await Firebase.initializeApp();
+// }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(const StandUp());
 }
@@ -58,6 +59,11 @@ class AbstractPage extends StatefulWidget {
 class _AbstractPageState extends State<AbstractPage> {
   late int _currentIndex;
   late final List _pageOptions;
+  String textValue = 'Test';
+
+  final DatabaseReference _db = FirebaseDatabase.instance.ref('users');
+  //final FirebaseMessaging _fcm = FirebaseMessaging();
+
 
   _AbstractPageState() {
     _currentIndex = 0;
@@ -83,11 +89,20 @@ class _AbstractPageState extends State<AbstractPage> {
     });
   }
 
+  //StreamSubscription iosSubscription;
+
   @override
   void initState() {
     super.initState();
 
     LocalNotificationService.initialize(context);
+
+    // if(Platform.isIOS) {
+    //   iosSubscription = _fcm.onIosSettingsRegistered.listen((data) {
+    //
+    //   });
+    //   _fcm.requestNotificationPermissions(IosNotificationSettings());
+    // }
 
     FirebaseMessaging.instance.requestPermission().then((value) {
       print(value);
@@ -124,7 +139,6 @@ class _AbstractPageState extends State<AbstractPage> {
       final routeFromMessage = message.data["route"];
       Navigator.of(context).pushNamed(routeFromMessage);
     });
-
   }
 
   @override

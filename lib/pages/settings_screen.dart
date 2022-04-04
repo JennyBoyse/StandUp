@@ -1,8 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import '../app_theme.dart';
 import '../data/form_data.dart';
-import '../data/form_data_dao.dart';
 import '../data_list.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -197,7 +198,8 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
     _userID = _prefs.then((SharedPreferences prefs) {
       return prefs.getString('userID');
     });
-    UserData.getUserData(model, initialID);
+    print(UserData.getUserData(initialID));
+    //populateFields(model, data);
     _duration = '01:00';
     _interval = '00:30';
   }
@@ -205,6 +207,19 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
   static getUserID(email) {
     var arr = email.split('@');
     return arr[0];
+  }
+
+  static getKeyValue(data, key) {
+    return data[key];
+  }
+
+  static populateFields(model, data){
+    model.email = getKeyValue(data, 'emailAddress');
+    model.startTime = getKeyValue(data, 'startTime');
+    model.endTime = getKeyValue(data, 'endTime');
+    model.lunchBreak = getKeyValue(data, 'lunchBreak');
+    model.lunchDuration = getKeyValue(data, 'lunchDuration');
+    model.breakInterval = getKeyValue(data, 'breakInterval');
   }
 
   @override
