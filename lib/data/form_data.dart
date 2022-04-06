@@ -1,35 +1,44 @@
-class FormData {
-  late String? email;
-  late String? startTime;
-  late String? endTime;
-  late String? lunchBreak;
-  late String? lunchDuration;
-  late String? breakInterval;
-  late DateTime date;
+// user entries in Firestore database
+class User {
+  String id;
+  String interval;
+  String lastProcessed;
+  String lunchBreak;
+  String lunchDuration;
+  String startTime;
+  String endTime;
+  String tokenID;
 
-  FormData(this.email, this.startTime, this.endTime, this.lunchBreak, this.lunchDuration, this.breakInterval, this.date);
+  User(this.id, this.interval, this.lastProcessed, this.lunchBreak,
+      this.lunchDuration, this.startTime, this.endTime, this.tokenID);
 
-  FormData.fromJson(Map<dynamic, dynamic> json)
-      : email = json['emailAddress'] as String?,
-        startTime = json['startTime'] as String?,
-        endTime = json['endTime'] as String?,
-        lunchBreak = json['lunchBreak'] as String?,
-        lunchDuration = json['lunchDuration'] as String?,
-        breakInterval = json['interval'] as String?,
-        date = DateTime.parse(json['lastProcessed'] as String);
+  // convert user data to Firestore JSON format
+  Map toJson() => {
+    'id': id,
+    'interval': interval,
+    'lastProcessed': lastProcessed,
+    'lunchBreak': lunchBreak,
+    'lunchDuration': lunchDuration,
+    'startTime': startTime,
+    'endTime': endTime,
+    'tokenID': tokenID
+  };
+
+  // convert user data from Firestore JSON format
+  factory User.fromJson(dynamic json) {
+    return User(
+        json['id'] as String,
+        json['interval'] as String,
+        json['lastProcessed'] as String,
+        json['lunchBreak'] as String,
+        json['lunchDuration'] as String,
+        json['startTime'] as String,
+        json['endTime'] as String,
+        json['tokenID'] as String);
+  }
 
   @override
   String toString() {
-    return '{$email, $startTime, $endTime, $lunchBreak, $lunchDuration, $breakInterval, $date}';
+    return '{ ${this.id}, ${this.interval}, ${this.lastProcessed}, ${this.lunchBreak}, ${this.lunchDuration}, ${this.startTime}, ${this.endTime}, ${this.tokenID} }';
   }
-
-  Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
-    'lastProcessed': date.toString(),
-    'emailAddress': email,
-    'startTime': startTime,
-    'endTime': endTime,
-    'lunchBreak': lunchBreak,
-    'lunchDuration': lunchDuration,
-    'interval': breakInterval,
-  };
 }

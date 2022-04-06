@@ -1,11 +1,11 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../data/form_data.dart';
 
 class FormDataDao {
-  final DatabaseReference _dataRef = FirebaseDatabase.instance.ref('users');
+  final CollectionReference _dataRef = FirebaseFirestore.instance.collection('users');
 
-  void saveData(FormData data) {
-    _dataRef.push().set(data.toJson());
+  void saveData(User data, String id) {
+    _dataRef.doc(id).set(data.toJson());
   }
 
   Query getDataQuery() {

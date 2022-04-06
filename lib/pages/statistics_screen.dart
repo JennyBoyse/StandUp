@@ -60,7 +60,6 @@ class StatisticsScreen extends StatelessWidget {
                                           children: [
                                             Text('Total Sitting Time',
                                                 style: AppTheme.body2),
-                                            //TODO Implement W M Y overview
                                           ],
                                         ),
                                         const SizedBox(height: 10),

@@ -179,19 +179,6 @@ class _ActivitiesGridState extends State<ActivitiesGrid> {
     return Container(
         child: Column(
             children: <Widget>[
-          /*Padding(padding: const EdgeInsets.fromLTRB(10,0,10,0),
-            child: TextField(
-              onChanged: (value) {
-                filterSearchResults(value);
-              },
-              controller: editingController,
-              decoration: const InputDecoration(
-                hintText: 'Search activities',
-                prefixIcon: Icon(Icons.search),
-                border: UnderlineInputBorder(),
-              ),
-            )
-          ),*/ // TODO: Implement searchbar for activities list
       const SizedBox(height: 15),
       LayoutGrid(
         columnSizes: widget.crossAxisCount == 2 ? [1.fr, 1.fr] : [1.fr, 1.fr],

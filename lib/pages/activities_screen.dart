@@ -46,7 +46,7 @@ class ActivitiesScreen extends StatelessWidget {
                       height: 200.0,
                       child: Center(child: TopPicks(activitiesList: activitiesList,customWidth: screenWidth*0.8,context: context,))),
                   Container(padding: EdgeInsets.symmetric(horizontal: sliverHorizontalPadding(screenWidth)),
-                      child: ActivitiesGrid(crossAxisCount: crossAxisCount, activitiesList: activitiesList,)),
+                      child: Center(child: ActivitiesGrid(crossAxisCount: crossAxisCount, activitiesList: activitiesList,))),
                   const SizedBox(height:20),
                 ]
               ),

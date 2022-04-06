@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import '../app_theme.dart';
 import '../data/form_data.dart';
-import '../data_list.dart';
-import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../data/data_list.dart';
+import '../data/form_data_dao.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatelessWidget {
   final void Function(int index) changePage;
@@ -169,57 +167,47 @@ class WorkdaySettings extends StatefulWidget {
 class _WorkdaySettingsState extends State<WorkdaySettings> {
   late String _duration;
   late String _interval;
-  static const String initialID = 'standuptestuser+9';
+  late String _id;
 
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  late Future<String?> _userID;
+  String getUserID(String id) {
+    String userID = 'standuptestuser+9';
+    if (id != userID) {
+      return id;
+    }
+    return userID;
+  }
 
-  Map<String, Object> values = <String, Object>{'userID': ""};
+  //final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  //late Future<String?> _userID;
 
-  Future<void> _updateUserID() async{
+  //Map<String, Object> values = <String, Object>{'userID': ""};
+
+  /*Future<void> _updateUserID() async{
     final SharedPreferences prefs = await _prefs;
     final String? userID = (prefs.getString('userID'));
 
     setState(() {
       _userID = prefs.setString('userID', userID!).then((bool success) {
+        print(userID);
+        print(_userID);
         return userID;
       });
     });
-  }
+  }*/
 
   final formKey = GlobalKey<FormState>();
-  late FormData model = FormData("","","","","","",DateTime.now());
+  late User model = User('standuptestuser',"","","","","","","");
   final _durations = ["00:30", "01:00", "01:30", "02:00",];
   final _intervals = ["00:15", "00:30", "00:45", "01:00",];
 
   @override
   void initState() {
     super.initState();
-    _userID = _prefs.then((SharedPreferences prefs) {
+    /*_userID = _prefs.then((SharedPreferences prefs) {
       return prefs.getString('userID');
-    });
-    print(UserData.getUserData(initialID));
-    //populateFields(model, data);
+    });*/
     _duration = '01:00';
     _interval = '00:30';
-  }
-
-  static getUserID(email) {
-    var arr = email.split('@');
-    return arr[0];
-  }
-
-  static getKeyValue(data, key) {
-    return data[key];
-  }
-
-  static populateFields(model, data){
-    model.email = getKeyValue(data, 'emailAddress');
-    model.startTime = getKeyValue(data, 'startTime');
-    model.endTime = getKeyValue(data, 'endTime');
-    model.lunchBreak = getKeyValue(data, 'lunchBreak');
-    model.lunchDuration = getKeyValue(data, 'lunchDuration');
-    model.breakInterval = getKeyValue(data, 'breakInterval');
   }
 
   @override
@@ -233,16 +221,16 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
             children: <Widget>[
               TextFormField(
                 decoration: const InputDecoration(
-                  hintText: 'e.g. standuptestuser@gmail.com',
+                  hintText: 'e.g. standuptestuser',
                   border: UnderlineInputBorder(),
-                  labelText: 'Test Email Address',
+                  labelText: 'Test User ID',
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
-                onChanged: (val) => _updateUserID,
+                onChanged: (val) => print(val),
                 validator: (val) {
                   return null;
                 },
-                onSaved: (val) => model.email = val!,
+                onSaved: (val) => model.id = val!,
               ),
               DateTimePicker(
                 type: DateTimePickerType.time,
@@ -335,9 +323,10 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         formKey.currentState?.save();
+                        model.id = getUserID(_id);
                         model.lunchDuration = _duration;
-                        model.breakInterval = _interval;
-                        FutureBuilder<String?>(
+                        model.interval = _interval;
+                        /*FutureBuilder<String?>(
                           future: _userID,
                           builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
                             switch (snapshot.connectionState) {
@@ -354,7 +343,7 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
                                 }
                             }
                           }
-                        );
+                        );*/
                         UserData.addData(model);
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(backgroundColor: AppTheme.lightGrey, content: Text('Processing Data...',style:AppTheme.card2)),
