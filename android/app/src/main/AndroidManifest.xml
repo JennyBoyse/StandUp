@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.stand_up_2">
    <application
-        android:label="stand_up_2"
+        android:label="StandUp"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
        >

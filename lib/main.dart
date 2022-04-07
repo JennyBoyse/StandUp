@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stand_up_2/services/local_notification_service.dart';
 
 import 'data/form_data.dart';
@@ -22,16 +23,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
   runApp(const StandUp());
 }
-
-/*Future<void> saveTokenToDatabase(String token) async {
-  //String userId = FirebaseAuth.instance.currentUser!.uid;
-  String userId = 'testUser';
-
-  await FirebaseFirestore.instance.collection('users').doc(userId).update({'tokens':FieldValue.arrayUnion([token])});
-}*/
 
 class StandUp extends StatelessWidget {
   static const String _title = 'StandUp';
@@ -69,6 +62,8 @@ class AbstractPage extends StatefulWidget {
 class _AbstractPageState extends State<AbstractPage> {
   late int _currentIndex;
   late final List _pageOptions;
+  late SharedPreferences prefs;
+  late String userId;
 
   _AbstractPageState() {
     _currentIndex = 0;
@@ -94,22 +89,40 @@ class _AbstractPageState extends State<AbstractPage> {
     });
   }
 
-  /*void saveAndroidToken(token) async {
-    await saveTokenToDatabase(token);
-  }
+  /*
+  void initial() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userId = prefs.getString('userId');
+    });
+  }*/
 
-  void saveAPNSToken(token) async {
-    await saveTokenToDatabase(token);
-  }
-*/
   @override
   void initState() {
     super.initState();
+    //initial();
 
     // initialise Firebase cloud messaging service
     LocalNotificationService.initialize(context);
 
+    String? userIdent = 'standuptestuser';
+    print('userId');
     var userToken = '';
+
+    // retrieve user ID from local storage
+    Future<String?> getUserId() async {
+      var userId = prefs.getString('userId');
+      return userId;
+    }
+
+    void updateUserId() {
+      print(getUserId());
+      getUserId().then((value) {
+        setState(() {
+          userIdent = value;
+        });
+      });
+    }
 
     // request user permission to send notifications
     FirebaseMessaging.instance.requestPermission().then((value) {
@@ -128,11 +141,11 @@ class _AbstractPageState extends State<AbstractPage> {
       userToken = APNStoken.toString();
     });
 
-    var userIdent = 'standuptestuser+9';
-
     CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-    // look for the userID in the Firebase database, pull user data into app
+    updateUserId();
+
+    // look for the user ID in the Firebase database, pull user data into app
     users.doc(userIdent).get().then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         print('Found user: ${documentSnapshot.data()}');
@@ -150,7 +163,7 @@ class _AbstractPageState extends State<AbstractPage> {
 
         print('User ID: ${user.id}');
 
-        user.tokenID = "XX";
+        user.tokenID = userToken;
 
         // update the user record to change their FCM token
         users
@@ -160,18 +173,17 @@ class _AbstractPageState extends State<AbstractPage> {
             .catchError((error) => print('Failed to update user: $error'));
       } else {
         print('User does not exist on the database, creating one');
-
         users
             .doc(userIdent)
             .set({
-          'id': '2',
-          'interval': '00:45',
+          'id': userIdent,
+          'interval': '00:30',
           'lastProcessed': '',
           'lunchBreak': '12:00',
           'lunchDuration': '01:00',
           'startTime': '09:00',
           'endTime': '17:00',
-          'tokenID': 'X'
+          'tokenID': userToken,
         }).then((value) => print('User Added'))
             .catchError((error) => print('Failed to add user: $error')
         );
@@ -193,7 +205,7 @@ class _AbstractPageState extends State<AbstractPage> {
         print(message.notification!.body);
         print(message.notification!.title);
       }
-      LocalNotificationService.display(message);
+      //LocalNotificationService.display(message);
     });
 
     // notification onTap action - app is in background but open
