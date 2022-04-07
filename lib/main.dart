@@ -62,8 +62,8 @@ class AbstractPage extends StatefulWidget {
 class _AbstractPageState extends State<AbstractPage> {
   late int _currentIndex;
   late final List _pageOptions;
-  late SharedPreferences prefs;
-  late String userId;
+  SharedPreferences? prefs;
+  String? userIdent;
 
   _AbstractPageState() {
     _currentIndex = 0;
@@ -89,29 +89,28 @@ class _AbstractPageState extends State<AbstractPage> {
     });
   }
 
-  /*
   void initial() async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
-      userId = prefs.getString('userId');
+      userIdent = prefs?.getString('userId');
     });
-  }*/
+  }
 
   @override
   void initState() {
     super.initState();
-    //initial();
+    initial();
 
     // initialise Firebase cloud messaging service
     LocalNotificationService.initialize(context);
 
-    String? userIdent = 'standuptestuser';
-    print('userId');
+    //String? userIdent = 'standuptestuser';
+    //print('userId');
     var userToken = '';
 
     // retrieve user ID from local storage
     Future<String?> getUserId() async {
-      var userId = prefs.getString('userId');
+      var userId = prefs?.getString('userId');
       return userId;
     }
 
@@ -119,7 +118,7 @@ class _AbstractPageState extends State<AbstractPage> {
       print(getUserId());
       getUserId().then((value) {
         setState(() {
-          userIdent = value;
+          userIdent = value!;
         });
       });
     }

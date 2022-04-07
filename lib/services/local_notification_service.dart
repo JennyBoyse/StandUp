@@ -22,7 +22,6 @@ class LocalNotificationService {
     });
   }
 
-
   static void display(RemoteMessage message) async{
 
     final cron = Cron() ..schedule(Schedule.parse('*/1 * * * * *'), () async {
