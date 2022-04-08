@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../app_theme.dart';
 import '../data/form_data.dart';
 import '../data/data_list.dart';
+import '../services/firestore_manager.dart';
 
 class SettingsScreen extends StatelessWidget {
   final void Function(int index) changePage;
@@ -166,8 +167,11 @@ class WorkdaySettings extends StatefulWidget {
 class _WorkdaySettingsState extends State<WorkdaySettings> {
   late String _duration;
   late String _interval;
-  final id_controller = TextEditingController();
-  late SharedPreferences prefs;
+  final emailController = TextEditingController();
+  final startTimeController = TextEditingController();
+  final endTimeController = TextEditingController();
+  final lunchBreakController = TextEditingController();
+  late FirestoreManager prefs;
   late bool setId;
 
   final formKey = GlobalKey<FormState>();
@@ -192,12 +196,12 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
   }
 
   void checkUserId() async {
-    prefs = await SharedPreferences.getInstance();
-    setId = (prefs.getBool('userIdSet') ?? true);
-    print(setId);
-    if(setId == false) {
-      prefs.setString('userId', 'standuptestuser');
-    }
+    prefs = await FirestoreManager.getInstance();
+    // setId = (prefs.getBool('userIdSet') ?? true);
+    // print(setId);
+    // if(setId == false) {
+    //   prefs.setString('userId', 'standuptestuser');
+    // }
   }
 
   @override
@@ -210,7 +214,7 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               TextFormField(
-                controller: id_controller,
+                controller: emailController,
                 decoration: const InputDecoration(
                   hintText: 'e.g. standuptestuser',
                   border: UnderlineInputBorder(),
@@ -224,8 +228,8 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
                 onSaved: (val) => model.id = val!,
               ),
               DateTimePicker(
+                controller: startTimeController,
                 type: DateTimePickerType.time,
-                initialValue: model.startTime,
                 timeLabelText: 'Start time',
                 onChanged: (val) => print(val),
                 validator: (val) {
@@ -234,8 +238,8 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
                 onSaved: (val) => model.startTime = val!,
               ),
               DateTimePicker(
+                controller: endTimeController,
                 type: DateTimePickerType.time,
-                initialValue: model.endTime,
                 timeLabelText: 'End time',
                 onChanged: (val) => print(val),
                 validator: (val) {
@@ -244,8 +248,8 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
                 onSaved: (val) => model.endTime = val!,
               ),
               DateTimePicker(
+                controller: lunchBreakController,
                 type: DateTimePickerType.time,
-                initialValue: '13:00',
                 timeLabelText: 'Lunch break',
                 onChanged: (val) => print(val),
                 validator: (val) {
@@ -314,8 +318,19 @@ class _WorkdaySettingsState extends State<WorkdaySettings> {
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         formKey.currentState?.save();
-                        prefs.setString('userId',id_controller.text); // update the user ID in local storage
-                        print(prefs.getString('userId'));
+                        // print(id_controller.text);
+
+                        Map<String, String> userData = {
+                          "email": emailController.text,
+                          "startTime": startTimeController.text,
+                          "endTime": endTimeController.text,
+                          "lunchBreak": lunchBreakController.text,
+                          "lunchDuration": _duration,
+                          "interval": _interval
+                        };
+                        prefs.updateOrCreateUser(userData);
+                        // prefs.setString('userId',id_controller.text); // update the user ID in local storage
+                        // print(prefs.getString('userId'));
                         //model.lunchDuration = _duration;
                         //model.interval = _interval;
                         ScaffoldMessenger.of(context).showSnackBar(
