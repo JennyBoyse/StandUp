@@ -8,7 +8,6 @@ class ActivitySubpage extends StatelessWidget {
   final String intensity;
   final String instructionsList;
 
-
   ActivitySubpage(
       {Key? key,
       required this.activity,

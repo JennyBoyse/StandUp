@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:core';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -62,7 +63,7 @@ class AbstractPage extends StatefulWidget {
 class _AbstractPageState extends State<AbstractPage> {
   late int _currentIndex;
   late final List _pageOptions;
-  SharedPreferences? prefs;
+  late SharedPreferences prefs;
   String? userIdent;
 
   _AbstractPageState() {
@@ -89,39 +90,31 @@ class _AbstractPageState extends State<AbstractPage> {
     });
   }
 
-  void initial() async {
+  void initial(userToken) async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
-      userIdent = prefs?.getString('userId');
+      userIdent = prefs.getString('userId');
     });
+    prefs.setString("tokenID", userToken).then((value) => print(prefs.getString("tokenID")));
   }
 
   @override
   void initState() {
     super.initState();
-    initial();
 
     // initialise Firebase cloud messaging service
     LocalNotificationService.initialize(context);
 
-    //String? userIdent = 'standuptestuser';
-    //print('userId');
     var userToken = '';
 
-    // retrieve user ID from local storage
-    Future<String?> getUserId() async {
-      var userId = prefs?.getString('userId');
-      return userId;
-    }
-
-    void updateUserId() {
-      print(getUserId());
-      getUserId().then((value) {
-        setState(() {
-          userIdent = value!;
-        });
-      });
-    }
+    // void updateUserId() {
+    //   print(_PrefUtilitiesState().getUserId());
+    //   _PrefUtilitiesState().getUserId().then((value) {
+    //     setState(() {
+    //       userIdent = value;
+    //     });
+    //   });
+    // }
 
     // request user permission to send notifications
     FirebaseMessaging.instance.requestPermission().then((value) {
@@ -140,54 +133,11 @@ class _AbstractPageState extends State<AbstractPage> {
       userToken = APNStoken.toString();
     });
 
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    initial(userToken);
 
-    updateUserId();
+    // updateUserId();
 
-    // look for the user ID in the Firebase database, pull user data into app
-    users.doc(userIdent).get().then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        print('Found user: ${documentSnapshot.data()}');
-
-        User user = User(
-            documentSnapshot.get('id'),
-            documentSnapshot.get('interval'),
-            documentSnapshot.get('lastProcessed'),
-            documentSnapshot.get('lunchBreak'),
-            documentSnapshot.get('lunchDuration'),
-            documentSnapshot.get('startTime'),
-            documentSnapshot.get('endTime'),
-            documentSnapshot.get('tokenID')
-        );
-
-        print('User ID: ${user.id}');
-
-        user.tokenID = userToken;
-
-        // update the user record to change their FCM token
-        users
-            .doc(userIdent)
-            .set({'tokenID': "${user.tokenID}"}, SetOptions(merge: true))
-            .then((value) => print('User Token Updated'))
-            .catchError((error) => print('Failed to update user: $error'));
-      } else {
-        print('User does not exist on the database, creating one');
-        users
-            .doc(userIdent)
-            .set({
-          'id': userIdent,
-          'interval': '00:30',
-          'lastProcessed': '',
-          'lunchBreak': '12:00',
-          'lunchDuration': '01:00',
-          'startTime': '09:00',
-          'endTime': '17:00',
-          'tokenID': userToken,
-        }).then((value) => print('User Added'))
-            .catchError((error) => print('Failed to add user: $error')
-        );
-      }
-    });
+    // UpdateFirestore(userIdent: userIdent, userToken: userToken);
 
     // sends notification and opens app from terminated state
     FirebaseMessaging.instance.getInitialMessage().then((message) {
@@ -261,3 +211,128 @@ class _AbstractPageState extends State<AbstractPage> {
         appBar: null);
   }
 }
+
+// class PrefUtilities extends StatefulWidget {
+//   const PrefUtilities({Key? key}) : super(key: key);
+//
+//   @override
+//   _PrefUtilitiesState createState() => _PrefUtilitiesState();
+// }
+//
+// class _PrefUtilitiesState extends State<PrefUtilities> {
+//   SharedPreferences? prefs;
+//   static String? userIdent;
+//
+//   void initial() async {
+//     prefs = await SharedPreferences.getInstance();
+//     setState(() {
+//       userIdent = prefs?.getString('userId');
+//     });
+//   }
+//
+//   // retrieve user ID from local storage
+//   Future<String?> getUserId() async {
+//     var userId = prefs?.getString('userId');
+//     return userId;
+//   }
+//
+//   void updateUserId() {
+//     print(getUserId());
+//     getUserId().then((value) {
+//       setState(() {
+//         userIdent = value!;
+//       });
+//     });
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     throw UnimplementedError();
+//   }
+// }
+//
+// class UpdateFirestore {
+//   String? userIdent;
+//   String userToken;
+//   String existingUserId;
+//   static const userTokens = [];
+//
+//   UpdateFirestore({required this.userIdent, required this.userToken});
+//
+//   CollectionReference users = FirebaseFirestore.instance.collection('users');
+//
+//   void initState() {
+//     // look for the user ID in the Firebase database, pull user data into app
+//     users.doc(userIdent).get().then((DocumentSnapshot documentSnapshot) {
+//       if (documentSnapshot.exists) {
+//         print('Found user: ${documentSnapshot.data()}');
+//
+//         User user = User(
+//             documentSnapshot.get('id'),
+//             documentSnapshot.get('interval'),
+//             documentSnapshot.get('lastProcessed'),
+//             documentSnapshot.get('lunchBreak'),
+//             documentSnapshot.get('lunchDuration'),
+//             documentSnapshot.get('startTime'),
+//             documentSnapshot.get('endTime'),
+//             documentSnapshot.get('tokenID')
+//         );
+//
+//         print('User ID: ${user.id}');
+//
+//         user.tokenID = userToken;
+//
+//         // update the user record to change their FCM token
+//         users
+//             .doc(userIdent)
+//             .set({'tokenID': "${user.tokenID}"}, SetOptions(merge: true))
+//             .then((value) => print('User Token Updated'))
+//             .catchError((error) => print('Failed to update user: $error'));
+//       } else {
+//         print('User ID does not exist on the database...');
+//         print('checking to see if token exists in database');
+//         if (checkForUserToken(userToken) == true) {
+//           // TODO: set current userID associated with token to new userID
+//
+//         }
+//         else {
+//           print('Confirmed new user login, adding to database...');
+//           users
+//               .doc(userIdent)
+//               .set({
+//             'id': userIdent,
+//             'interval': '00:30',
+//             'lastProcessed': '',
+//             'lunchBreak': '12:00',
+//             'lunchDuration': '01:00',
+//             'startTime': '09:00',
+//             'endTime': '17:00',
+//             'tokenID': userToken,
+//           }).then((value) => print('User Added'))
+//               .catchError((error) => print('Failed to add user: $error')
+//           );
+//         }
+//       }
+//     });
+//   }
+//
+//   Future<bool> checkForUserToken(String userToken) async {
+//     final querySnapshot = await users.where('tokenID', isGreaterThan:'').get();
+//     final userIDquery = await users.where('tokenID', isEqualTo: userToken).snapshots();
+//
+//     // add all existing tokens to userTokens array
+//     for (var doc in querySnapshot.docs) {
+//       userTokens.addAll(doc.get('tokenID'));
+//     }
+//
+//     // check to see if the user's device token already exists in the database
+//     for (var token in userTokens) {
+//       if (token == userToken) {
+//         existingUserId =
+//         return true;
+//       }
+//       return false;
+//     }
+//     return false;
+//   }
+// }
