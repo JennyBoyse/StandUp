@@ -6,9 +6,9 @@ This repository hosts the code for a Flutter project consisting of a persuasive 
 
 ## Getting Started
 
-### Section 2A: Installation for Android users
+### Installation for Android users
 
-Please follow these instructions if you are using an Android device ([Source]([https://www.google.com](https://www.nextpit.com/android-for-beginners-what-is-an-apk-file#:~:text=Just%20open%20your%20browser%2C%20find,begin%20installing%20on%20your%20device.))):
+Please follow these instructions if you are using an Android device ([Source](https://www.nextpit.com/android-for-beginners-what-is-an-apk-file#:~:text=Just%20open%20your%20browser%2C%20find,begin%20installing%20on%20your%20device.)):
 
 1. Access the APK file contained in this repository: build > app > outputs > apk > release > app-release.apk
 2. Once you've downloaded the APK file on your computer, connect your Android device to it.
@@ -18,13 +18,13 @@ Please follow these instructions if you are using an Android device ([Source]([h
 6. You will now be able to search for the file location in the My files folder of your device.
 7. Open the file manager, find the APK file, tap it, then hit Install.
 
-### Section 2B: Installation for iOS users (via TestFlight)
+### Installation for iOS users (via TestFlight)
 
 Please follow these instructions if you are using an iOS device. 
 
 To test beta versions of apps and App Clips using TestFlight, you’ll need to accept an email link invitation from the researcher and have a device that you can use to test. You’ll be able to access the builds that the researcher makes available to you.
 
-If you would like further instructions and information about TestFlight, please see the following link: https://testflight.apple.com/.
+If you would like further instructions and information about TestFlight, please see the following link: [TestFlight Instructions](https://testflight.apple.com).
 
 Required platform: iPhone running iOS 11+.
 
@@ -35,7 +35,11 @@ Required platform: iPhone running iOS 11+.
 5. Please disable ‘Do not Disturb’ on your phone. This will ensure you receive push notifications from the app during testing.
 ![image](https://user-images.githubusercontent.com/56486001/171473514-994e59a0-cc88-40a2-8432-2352716f7249.png)
 
-## Image Credits
-Image attributes are provided within the images > attributes file. These are 'free for commercial use' icons from the Flaticon or icons8 websites.
+## Credits
+This code has been developed by Jennifer Boyse as part of an undergraduate research project at the University of Bath.
+
+Image attributes are provided within the assets > images > attributes file. These are 'free for commercial use' icons from the Flaticon or icons8 websites.
 Some icons have also been taken from the inbuilt Flutter Icons class within the Material App library. These can be found at the following link: https://api.flutter.dev/flutter/material/Icons-class.html
+
+Activity instructions attributes are provided within the assets > instructions_attributes file.
 
