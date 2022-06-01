@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter/material.dart';
-import '../activities_screen.dart';
-import '../activity_subpage.dart';
+import '../pages/activities_screen.dart';
+import '../pages/activity_subpage.dart';
 import '../app_theme.dart';
 import '../breakpoints.dart';
 
@@ -179,22 +179,9 @@ class _ActivitiesGridState extends State<ActivitiesGrid> {
     return Container(
         child: Column(
             children: <Widget>[
-          /*Padding(padding: const EdgeInsets.fromLTRB(10,0,10,0),
-            child: TextField(
-              onChanged: (value) {
-                filterSearchResults(value);
-              },
-              controller: editingController,
-              decoration: const InputDecoration(
-                hintText: 'Search activities',
-                prefixIcon: Icon(Icons.search),
-                border: UnderlineInputBorder(),
-              ),
-            )
-          ),*/ // TODO: Implement searchbar for activities list
       const SizedBox(height: 15),
       LayoutGrid(
-        columnSizes: widget.crossAxisCount == 2 ? [1.fr, 1.fr] : [1.fr],
+        columnSizes: widget.crossAxisCount == 2 ? [1.fr, 1.fr] : [1.fr, 1.fr],
         // flexible column sizes based on crossAxisCount
         rowSizes: rowSizes,
         // self-sizing row height
