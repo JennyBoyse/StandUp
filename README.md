@@ -10,7 +10,7 @@ This repository hosts the code for a Flutter project consisting of a persuasive 
 
 Please follow these instructions if you are using an Android device ([Source](https://www.nextpit.com/android-for-beginners-what-is-an-apk-file#:~:text=Just%20open%20your%20browser%2C%20find,begin%20installing%20on%20your%20device.)):
 
-1. Access the APK file contained in this repository: build > app > outputs > apk > release > app-release.apk
+1. Access the APK file for this repository: [StandUp Releases](https://github.com/JennyBoyse/StandUp/releases)
 2. Once you've downloaded the APK file on your computer, connect your Android device to it.
 3. At this point, you may be asked if you want to charge your phone or connect it as a 'media device' Choose Media device (File Transfer in some phones).
 4. Then, find your phone's folder on your computer. It will be in 'My Computer' or 'Computer' on Windows (PC). 
@@ -33,7 +33,6 @@ Required platform: iPhone running iOS 11+.
 3. When installing via public link, tap "Install" or "Update".
 4. After installing TestFlight, you’ll be asked if you'd like to install automatic updates. Please turn these on for the duration of the study.
 5. Please disable ‘Do not Disturb’ on your phone. This will ensure you receive push notifications from the app during testing.
-![image](https://user-images.githubusercontent.com/56486001/171473514-994e59a0-cc88-40a2-8432-2352716f7249.png)
 
 ## Credits
 This code has been developed by Jennifer Boyse as part of an undergraduate research project at the University of Bath.
